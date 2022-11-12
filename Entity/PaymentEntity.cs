@@ -6,7 +6,8 @@ namespace SlowInsurance.Entity
     {
         public int Id { get; set; }
         [Required]
-        public string PaymentType { get; set; }
+        public string? PaymentType { get; set; }
+        [Required]
         public float Value { get; set; }
     }
 }

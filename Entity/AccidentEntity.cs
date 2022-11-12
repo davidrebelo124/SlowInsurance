@@ -6,8 +6,8 @@ namespace SlowInsurance.Entity
     {
         public int Id { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
-        public string Location { get; set; }
+        public string? Location { get; set; }
     }
 }

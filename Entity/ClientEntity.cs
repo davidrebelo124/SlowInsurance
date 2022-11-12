@@ -1,23 +1,30 @@
-﻿namespace SlowInsurance.Entity
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+
+namespace SlowInsurance.Entity
 {
-    public class ClientEntity
+    public class ClientEntity : IdentityUser
     {
         public ClientEntity()
         {
             Vehicles = new List<VehicleEntity>();
         }
 
-        public int Id { get; set; }
+        [Required]
         public string? Name { get; set; }
+        [Required]
         public string? Address { get; set; }
+        [Required]
         public string? NIF { get; set; }
+        [Required]
         public string? IBAN { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? Email { get; set; }
-        public DateOnly Birthday { get; set; }
+        [Required]
+        public string? Birthday { get; set; }
+        [Required]
         public string? Historic { get; set; }
+        [Required]
         public string? DriverLicense { get; set; }
 
-        public IList<VehicleEntity> Vehicles { get; set; }
+        public ICollection<VehicleEntity> Vehicles { get; set; }
     }
 }

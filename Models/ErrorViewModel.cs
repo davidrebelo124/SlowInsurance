@@ -1,4 +1,4 @@
-namespace SlowInsurance.Models
+﻿namespace SlowInsurance.Models
 {
     public class ErrorViewModel
     {

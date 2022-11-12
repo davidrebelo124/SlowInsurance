@@ -12,18 +12,20 @@ namespace SlowInsurance.Entity
 
         public int Id { get; set; }
         [Required]
+        public string? VehicleType { get; set; }
+        [Required]
         public string? Model { get; set; }
         [Required]
-        public DateOnly RegisterDate { get; set; }
+        public string? RegisterDate { get; set; }
         [Required]
-        public string? CarPlate { get; set; }
+        public string? Plate { get; set; }
         [Required]
-        public DateOnly AdhesionDate { get; set; }
+        public string? AdhesionDate { get; set; }
         [Required]
         public string? PaymentSchedule { get; set; }
 
 
-        public virtual IList<PaymentEntity> Payments { get; set; }
-        public virtual IList<AccidentEntity> Accidents { get; set; }
+        public virtual ICollection<PaymentEntity> Payments { get; set; }
+        public virtual ICollection<AccidentEntity> Accidents { get; set; }
     }
 }
