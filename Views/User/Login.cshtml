@@ -1,3 +1,29 @@
-﻿@{
+﻿@model LoginViewModel
+@{
     ViewData["Title"] = "Login";
 }
+
+<div class="form-signin w-100 m-auto">
+    <form asp-controller="User" asp-action="Login" method="post">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-floating my-1">
+            <input type="email" class="form-control" asp-for="Email" placeholder="name@example.com">
+            <label asp-for="Email">Email address</label>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+            <label asp-for="Password">Password</label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="checkbox my-3">
+            <label>
+                <input asp-for="RememberMe" />
+                @Html.DisplayNameFor(m => m.RememberMe)
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    </form>
+</div>

@@ -22,12 +22,27 @@
 
                 <div class="navbar-collapse collapse d-flex">
                     <ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse">
-                        <li class="nav-item px-1">
-                            <a class="btn btn-primary" asp-controller="User" asp-action="Login" role="button">Login</a>
-                        </li>
-                        <li class="nav-item px-1">
-                            <a class="btn btn-primary" asp-controller="User" asp-action="SignIn" role="button">Sign In</a>
-                        </li>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item px-1">
+                                <form method="post" asp-action="Logout" asp-controller="User">
+                                    <button type="submit" class="btn btn-primary">
+                                        Logout @User.Identity.Name
+                                    </button>
+                                </form>
+
+                                <a class="btn btn-primary" asp-controller="User" asp-action="SignIn" role="button">Sign In</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item px-1">
+                                <a class="btn btn-primary" asp-controller="User" asp-action="Login" role="button">Login</a>
+                            </li>
+                            <li class="nav-item px-1">
+                                <a class="btn btn-primary" asp-controller="User" asp-action="SignIn" role="button">Sign In</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

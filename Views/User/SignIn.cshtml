@@ -1,58 +1,68 @@
-﻿@{
+﻿@model RegisterViewModel
+@{
     ViewData["Title"] = "Sign In";
 }
 
 <div class="form-signin w-100 m-auto">
-    <form asp-controller="User" asp-action="Register" method="post">
+    <form asp-controller="User" asp-action="SignIn" method="post">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-floating my-1">
+            <input type="text" class="form-control" asp-for="Name" placeholder="Name">
+            <label asp-for="Name"></label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <input type="email" class="form-control" asp-for="Email" placeholder="name@example.com">
+            <label asp-for="Email"></label>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <input type="text" class="form-control" asp-for="Address" placeholder="Address">
+            <label asp-for="Address"></label>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <input type="text" class="form-control" asp-for="NIF" placeholder="NIF">
+            <label asp-for="NIF"></label>
+            <span asp-validation-for="NIF" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <input type="text" class="form-control" asp-for="IBAN" placeholder="IBAN">
+            <label asp-for="IBAN"></label>
+            <span asp-validation-for="IBAN" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <input type="tel" class="form-control" asp-for="PhoneNumber" placeholder="Phone Number">
+            <label asp-for="PhoneNumber"></label>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <input type="date" class="form-control" asp-for="Birthday" placeholder="Birthday">
+            <label asp-for="Birthday"></label>
+            <span asp-validation-for="Birthday" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <input type="text" class="form-control" asp-for="DriverLicense" placeholder="Driver's License Number">
+            <label asp-for="DriverLicense"></label>
+            <span asp-validation-for="DriverLicense" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1">
+            <textarea class="form-control" asp-for="Historic" rows="3" placeholder="Historic"></textarea>
+            <label asp-for="Historic"></label>
+            <span asp-validation-for="Historic" class="text-danger"></span>
+        </div>
 
         <div class="form-floating my-1">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Name">
-            <label for="floatingInput">Name</label>
+            <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+            <label asp-for="Password"></label>
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div class="form-floating my-1">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
+            <input type="password" class="form-control" asp-for="ConfirmPassword" placeholder="Confirm Password">
+            <label asp-for="ConfirmPassword"></label>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
-        <div class="form-floating my-1">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Address">
-            <label for="floatingInput">Address</label>
-        </div>
-        <div class="form-floating my-1">
-            <input type="text" class="form-control" id="floatingInput" placeholder="NIF">
-            <label for="floatingInput">NIF</label>
-        </div>
-        <div class="form-floating my-1">
-            <input type="text" class="form-control" id="floatingInput" placeholder="IBAN">
-            <label for="floatingInput">IBAN</label>
-        </div>
-        <div class="form-floating my-1">
-            <input type="tel" class="form-control" id="floatingInput" placeholder="Phone Number">
-            <label for="floatingInput">Phone Number</label>
-        </div>
-        <div class="form-floating my-1">
-            <input type="date" class="form-control" id="floatingInput" placeholder="Birthday">
-            <label for="floatingInput">Birthday</label>
-        </div>
-        <div class="form-floating my-1">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Driver License Number">
-            <label for="floatingInput">Driver License Number</label>
-        </div>
-        <div class="form-floating my-1">
-            <textarea class="form-control" id="floatingInput" rows="3" placeholder="Historic"></textarea>
-            <label for="floatingInput">Historic</label>
-        </div>
-
-        <div class="form-floating my-1">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-        </div>
-
-        @*<div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>*@
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     </form>
 </div>
