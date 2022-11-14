@@ -3,9 +3,9 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="form-signin w-100 m-auto">
-    <form asp-controller="User" asp-action="Login" method="post">
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+<div class="container text-center w-50">
+    <form asp-controller="User" asp-action="Login" method="post" class="row g-3">
+        <h1 class="h3 mb-3 fw-normal">Login</h1>
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-floating my-1">
             <input type="email" class="form-control" asp-for="Email" placeholder="name@example.com">
