@@ -4,7 +4,7 @@
 }
 
 <div class="container text-center w-50">
-    <form asp-controller="User" asp-action="Login" method="post" class="row g-3">
+    <form asp-controller="Account" asp-action="Login" method="post" class="row g-3">
         <h1 class="h3 mb-3 fw-normal">Login</h1>
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-floating my-1">
@@ -24,6 +24,10 @@
                 @Html.DisplayNameFor(m => m.RememberMe)
             </label>
         </div>
+
+        @*<a asp-action="ForgotYourPassword" asp-controller="Account" class="justify-text-center m-5">Forgot your password?</a>*@
+
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     </form>
+    <a asp-action="SignIn" asp-controller="Account" class="justify-content-center m-5">Don't have an account?</a>
 </div>

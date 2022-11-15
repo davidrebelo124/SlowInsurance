@@ -3,7 +3,7 @@
     ViewData["Title"] = "Sign In";
 }
 
-<form asp-controller="User" asp-action="SignIn" method="post" class="row g-3">
+<form asp-controller="Account" asp-action="SignIn" method="post" class="row g-3">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-floating my-1 col-md-6">
@@ -63,4 +63,5 @@
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <a asp-action="Login" asp-controller="Account" class="align-self-sm-center align-content-sm-center align-items-sm-center justify-content-sm-center">Already have an account?</a>
 </form>

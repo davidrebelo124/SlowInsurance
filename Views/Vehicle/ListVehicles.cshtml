@@ -1,5 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<VehicleViewModel>;
 @{
+    ViewData["Title"] = "Vehicles";
+}
+@if (Model.Count() is 0)
+{
+    <div class="card">
+        <div class="card-header">
+            404
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">There are no vehicles associated to your name</h5>
+            <p class="card-text">We cannot seem to find any vehicles. If you wish to add an insurance, click the button bellow</p>
+            <a asp-controller="Vehicle" asp-action="AddVehicle" class="btn btn-primary">Add Vehicle</a>
+        </div>
+    </div>
+}
+else
+{
+    @foreach(var vehicle in Model){
+
+    }
 }

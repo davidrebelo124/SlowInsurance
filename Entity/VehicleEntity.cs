@@ -16,13 +16,11 @@ namespace SlowInsurance.Entity
         [Required]
         public string? Model { get; set; }
         [Required]
-        public string? RegisterDate { get; set; }
+        public string? RegistrationDate { get; set; }
         [Required]
         public string? Plate { get; set; }
         [Required]
         public string? AdhesionDate { get; set; }
-        [Required]
-        public string? PaymentSchedule { get; set; }
 
 
         public virtual ICollection<PaymentEntity> Payments { get; set; }
