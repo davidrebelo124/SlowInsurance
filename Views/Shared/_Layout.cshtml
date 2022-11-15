@@ -26,9 +26,16 @@
                         <li><a asp-controller="Vehicle" asp-action="ListVehicles" class="nav-link px-2 link-secondary">Vehicles</a></li>
                     </ul>
 
-                    <ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse ">
-                        @if (signInManager.IsSignedIn(User))
-                        {
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <div class="dropdown text-end flex-grow-1 d-flex flex-row-reverse">
+                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                            </a>
+                        </div>
+                        <ul class="dropdown-menu text-small">
+                            <li><a asp-action="AccountDetails" asp-controller="Account" class="dropdown-item">Account Details</a></li>
+                            <li><hr class="dropdown-divider" /></li>
                             <li class="nav-item px-1">
                                 <form method="post" asp-action="Logout" asp-controller="Account">
                                     <button type="submit" class="btn btn-primary">
@@ -36,17 +43,19 @@
                                     </button>
                                 </form>
                             </li>
-                        }
-                        else
-                        {
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse">
                             <li class="nav-item px-1">
                                 <a class="btn btn-primary" asp-controller="Account" asp-action="Login" role="button">Login</a>
                             </li>
                             <li class="nav-item px-1">
                                 <a class="btn btn-primary" asp-controller="Account" asp-action="SignIn" role="button">Sign In</a>
                             </li>
-                        }
-                    </ul>
+                        </ul>
+                    }
                 </div>
             </div>
         </nav>

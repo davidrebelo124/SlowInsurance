@@ -140,7 +140,7 @@ namespace SlowInsurance.Controllers
                 user.IBAN = model.IBAN;
                 user.NIF = model.NIF;
                 user.PhoneNumber = model.PhoneNumber;
-                //user.Use
+                user.UserName = model.Email;
 
                 await userManager.UpdateAsync(user);
             }
