@@ -1,5 +1,7 @@
+using EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SlowInsurance.Entity;
 using SlowInsurance.Repo;
 
@@ -11,10 +13,18 @@ builder.Services.AddMvc();
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
 
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 builder.Services.AddDbContext<InsuranceDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddIdentity<ClientEntity, IdentityRole>()
-                .AddEntityFrameworkStores<InsuranceDbContext>();
+                .AddEntityFrameworkStores<InsuranceDbContext>()
+                .AddDefaultTokenProviders();
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
+   opt.TokenLifespan = TimeSpan.FromHours(2));
 
 var app = builder.Build();
 

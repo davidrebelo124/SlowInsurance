@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EmailService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SlowInsurance.Entity;
@@ -12,12 +13,14 @@ namespace SlowInsurance.Controllers
         private readonly UserManager<ClientEntity> userManager;
         private readonly SignInManager<ClientEntity> signInManager;
         private readonly InsuranceDbContext context;
+        private readonly IEmailSender emailSender;
 
-        public AccountController(UserManager<ClientEntity> userManager, SignInManager<ClientEntity> signInManager, InsuranceDbContext context)
+        public AccountController(UserManager<ClientEntity> userManager, SignInManager<ClientEntity> signInManager, InsuranceDbContext context, IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
+            this.emailSender = emailSender;
         }
 
         [HttpGet]
@@ -145,6 +148,35 @@ namespace SlowInsurance.Controllers
                 await userManager.UpdateAsync(user);
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ForgotYourPasswordForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotYourPasswordForm(ForgotYourPasswordFormViewModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if(user is null)
+            {
+                ModelState.AddModelError("", "There is no user with that email.");
+                return View(model);
+            }
+
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callback = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+
+            var message = new Message(new string[] { user.Email }, "Reset password token", callback, null);
+            await emailSender.SendEmailAsync(message);
+
+            return RedirectToAction("", "");
         }
     }
 }
