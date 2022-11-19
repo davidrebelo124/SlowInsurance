@@ -2,7 +2,7 @@
 
 namespace SlowInsurance.Models
 {
-    public class RegisterViewModel
+    public class RegisterModel
     {
         [Required]
         public string? Name { get; set; }

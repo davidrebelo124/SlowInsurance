@@ -1,68 +1,98 @@
-﻿@model AccountDetailsViewModel
+﻿@model AccountDetailsModel
 @{
     ViewData["Title"] = "Account Details";
 }
 
-<form asp-controller="Account" asp-action="AccountDetails" method="post" class="row g-3">
-    <h1 class="h3 mb-3 fw-normal">User details</h1>
-    <input hidden type="text" class="form-control" asp-for="Email" value="@Model.Email">
+<div class="container py-4">
+    <form asp-controller="Account" asp-action="AccountDetails" method="post" class="row g-3">
+        <h1 class="h3 mb-3 fw-normal">User details</h1>
 
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-floating my-1 col-md-6">
-        <input type="text" class="form-control" asp-for="Name" value="@Model.Name">
-        <label asp-for="Name"></label>
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <input hidden type="text" class="form-control" asp-for="Email" value="@Model.Email">
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-floating my-1 col-md-6">
+            <input type="text" class="form-control" asp-for="Name" value="@Model.Name">
+            <label asp-for="Name"></label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-md-6">
+            <input type="email" class="form-control" asp-for="EmailChanged" value="@Model.EmailChanged">
+            <label asp-for="EmailChanged"></label>
+            <span asp-validation-for="EmailChanged" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-16">
+            <input type="text" class="form-control" asp-for="Address" value="@Model.Address">
+            <label asp-for="Address"></label>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-md-6">
+            <input type="text" class="form-control" asp-for="NIF" value="@Model.NIF">
+            <label asp-for="NIF"></label>
+            <span asp-validation-for="NIF" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-md-6">
+            <input type="text" class="form-control" asp-for="IBAN" value="@Model.IBAN">
+            <label asp-for="IBAN"></label>
+            <span asp-validation-for="IBAN" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-md-6">
+            <input type="tel" class="form-control" asp-for="PhoneNumber" value="@Model.PhoneNumber">
+            <label asp-for="PhoneNumber"></label>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-md-6">
+            <input type="date" class="form-control" asp-for="Birthday" value="@Model.Birthday">
+            <label asp-for="Birthday"></label>
+            <span asp-validation-for="Birthday" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-16">
+            <input type="text" class="form-control" asp-for="DriverLicense" value="@Model.DriverLicense">
+            <label asp-for="DriverLicense"></label>
+            <span asp-validation-for="DriverLicense" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-16">
+            <textarea class="form-control" asp-for="Historic" style="height: 150px" value="@Model.Historic"></textarea>
+            <label asp-for="Historic"></label>
+            <span asp-validation-for="Historic" class="text-danger"></span>
+        </div>
+        @*<br />
+        <div class="form-floating my-1 col-md-6">
+            <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+            <label asp-for="Password"></label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-floating my-1 col-md-6">
+            <input type="password" class="form-control" asp-for="ConfirmPassword" placeholder="Confirm Password">
+            <label asp-for="ConfirmPassword"></label>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>*@
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Update Details</button>
+
+        <div class="col-6 col-md-4">
+            <div class="list-group">
+                <a class="btn list-group-item list-group-item-action list-group-item-dark" data-bs-toggle="modal" data-bs-target="#ChangePassword">Change Password</a>
+                <a class="btn list-group-item list-group-item-action list-group-item-dark" data-bs-toggle="modal" data-bs-target="#DeleteAccount">Delete Acount</a>
+            </div>
+        </div>
+    </form>
+</div>
+<partial name="_ChangePassword" model="null"/>
+<div class="modal fade" id="DeleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete your Account</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="DeleteAccount" asp-controller="Account" method="post">
+                <div class="modal-body">
+                    Are you certain you want to delete your account. This action is irreversible!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete Account</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-floating my-1 col-md-6">
-        <input type="email" class="form-control" asp-for="EmailChanged" value="@Model.EmailChanged">
-        <label asp-for="EmailChanged"></label>
-        <span asp-validation-for="EmailChanged" class="text-danger"></span>
-    </div>
-    <div class="form-floating my-1 col-16">
-        <input type="text" class="form-control" asp-for="Address" value="@Model.Address">
-        <label asp-for="Address"></label>
-        <span asp-validation-for="Address" class="text-danger"></span>
-    </div>
-    <div class="form-floating my-1 col-md-6">
-        <input type="text" class="form-control" asp-for="NIF" value="@Model.NIF">
-        <label asp-for="NIF"></label>
-        <span asp-validation-for="NIF" class="text-danger"></span>
-    </div>
-    <div class="form-floating my-1 col-md-6">
-        <input type="text" class="form-control" asp-for="IBAN" value="@Model.IBAN">
-        <label asp-for="IBAN"></label>
-        <span asp-validation-for="IBAN" class="text-danger"></span>
-    </div>
-    <div class="form-floating my-1 col-md-6">
-        <input type="tel" class="form-control" asp-for="PhoneNumber" value="@Model.PhoneNumber">
-        <label asp-for="PhoneNumber"></label>
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
-    <div class="form-floating my-1 col-md-6">
-        <input type="date" class="form-control" asp-for="Birthday" value="@Model.Birthday">
-        <label asp-for="Birthday"></label>
-        <span asp-validation-for="Birthday" class="text-danger"></span>
-    </div>
-    <div class="form-floating my-1 col-16">
-        <input type="text" class="form-control" asp-for="DriverLicense" value="@Model.DriverLicense">
-        <label asp-for="DriverLicense"></label>
-        <span asp-validation-for="DriverLicense" class="text-danger"></span>
-    </div>
-    <div class="form-floating my-1 col-16">
-        <textarea class="form-control" asp-for="Historic" style="height: 150px" value="@Model.Historic"></textarea>
-        <label asp-for="Historic"></label>
-        <span asp-validation-for="Historic" class="text-danger"></span>
-    </div>
-    @*<br />
-    <div class="form-floating my-1 col-md-6">
-        <input type="password" class="form-control" asp-for="Password" placeholder="Password">
-        <label asp-for="Password"></label>
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <div class="form-floating my-1 col-md-6">
-        <input type="password" class="form-control" asp-for="ConfirmPassword" placeholder="Confirm Password">
-        <label asp-for="ConfirmPassword"></label>
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-    </div>*@
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Details</button>
-</form>
+</div>

@@ -2,23 +2,15 @@
 
 namespace SlowInsurance.Models
 {
-    public class AddVehicleViewModel
+    public class VehicleModel
     {
-        [Required]
-        [Display(Name = "Vehicle Type")]
+        public int Id { get; set; }
         public string? VehicleType { get; set; }
-        [Required]
         public string? Model { get; set; }
-        [Required]
-        [Display(Name = "Registration Date")]
+        [Display(Name = "Registration Dates")]
         public string? RegistrationDate { get; set; }
-        [Required]
         public string? Plate { get; set; }
-        [Required]
         [Display(Name = "Adhesion Date")]
         public string? AdhesionDate { get; set; }
-        [Required]
-        [Display(Name = "Payment Schedule")]
-        public string? PaymentSchedule { get; set; }
     }
 }

@@ -28,20 +28,16 @@
 
                     @if (signInManager.IsSignedIn(User))
                     {
-                        <div class="dropdown text-end flex-grow-1 d-flex flex-row-reverse">
-                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                            </a>
-                        </div>
-                        <ul class="dropdown-menu text-small">
-                            <li><a asp-action="AccountDetails" asp-controller="Account" class="dropdown-item">Account Details</a></li>
-                            <li><hr class="dropdown-divider" /></li>
+                        <ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse">
                             <li class="nav-item px-1">
                                 <form method="post" asp-action="Logout" asp-controller="Account">
                                     <button type="submit" class="btn btn-primary">
-                                        Logout @User.Identity.Name
+                                        Logout
                                     </button>
                                 </form>
+                            </li>
+                            <li class="nav-item px-3 py-1">
+                                <a asp-action="AccountDetails" asp-controller="Account" class="dropdown-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" alt="default" width="32" height="32" class="rounded-circle"></a>
                             </li>
                         </ul>
                     }

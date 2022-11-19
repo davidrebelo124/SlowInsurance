@@ -2,7 +2,7 @@
 
 namespace SlowInsurance.Models
 {
-    public class ForgotYourPasswordFormViewModel
+    public class ForgotPasswordModel
     {
         [Required]
         [EmailAddress]

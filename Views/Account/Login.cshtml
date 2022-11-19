@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model LoginModel
 @{
     ViewData["Title"] = "Login";
 }
@@ -25,7 +25,7 @@
             </label>
         </div>
 
-        <a asp-action="ForgotYourPasswordForm" asp-controller="Account" class="justify-text-center m-5">Forgot your password?</a>
+        <a asp-action="ForgotPassword" asp-controller="Account" class="justify-text-center">Forgot your password?</a>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     </form>

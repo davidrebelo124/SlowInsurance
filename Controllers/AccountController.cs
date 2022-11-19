@@ -32,7 +32,7 @@ namespace SlowInsurance.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(RegisterViewModel model)
+        public async Task<IActionResult> SignIn(RegisterModel model)
         {
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
@@ -85,7 +85,7 @@ namespace SlowInsurance.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
@@ -109,9 +109,9 @@ namespace SlowInsurance.Controllers
         public IActionResult AccountDetails()
         {
             var user = context.Users.First(u => u.UserName == User.Identity.Name);
-            var model = new AccountDetailsViewModel
+            var model = new AccountDetailsModel
             {
-                Email = user.Email,
+                Email = user.UserName,
                 EmailChanged = user.Email,
                 Name = user.Name,
                 Address = user.Address,
@@ -128,11 +128,12 @@ namespace SlowInsurance.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AccountDetails(AccountDetailsViewModel model)
+        public async Task<IActionResult> AccountDetails(AccountDetailsModel model)
         {
             if(ModelState.IsValid)
             {
-                var user = context.Users.First(u => u.UserName == model.Email);
+
+                var user = await userManager.FindByNameAsync(model.Email);
 
                 user.Email = model.EmailChanged;
                 user.Name = model.Name;
@@ -143,40 +144,129 @@ namespace SlowInsurance.Controllers
                 user.IBAN = model.IBAN;
                 user.NIF = model.NIF;
                 user.PhoneNumber = model.PhoneNumber;
-                user.UserName = model.Email;
+                user.UserName = model.EmailChanged;
 
-                await userManager.UpdateAsync(user);
+                var result = await userManager.UpdateAsync(user);
+
+                if(!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.TryAddModelError(error.Code, error.Description);
+                    }
+                    return View(model);
+                }
+                
+                await signInManager.RefreshSignInAsync(user);
+                return View(new AccountDetailsModel
+                {
+                    Address = user.Address,
+                    Birthday = user.Birthday,
+                    DriverLicense = user.DriverLicense,
+                    Email = user.Email,
+                    EmailChanged = user.Email,
+                    Historic = user.Historic,
+                    IBAN = user.IBAN,
+                    Name = user.Name,
+                    NIF = user.NIF,
+                    PhoneNumber = user.PhoneNumber,
+                });
             }
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult ForgotYourPasswordForm()
+        public IActionResult ForgotPassword()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotYourPasswordForm(ForgotYourPasswordFormViewModel model)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
         {
             if(!ModelState.IsValid)
                 return View(model);
 
             var user = await userManager.FindByEmailAsync(model.Email);
-            if(user is null)
+            if (user is null)
+                return RedirectToAction("ForgotPasswordConfirmation");
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var callback = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
+
+            var message = new Message(new string[] { user.Email }, "Reset password token", callback);
+            await emailSender.SendEmailAsync(message);
+
+            return RedirectToAction("ForgotPasswordConfirmation");
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordModel { Token = token, Email = email };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
+        {
+            if (!ModelState.IsValid)
+                return View(resetPasswordModel);
+
+            var user = await userManager.FindByEmailAsync(resetPasswordModel.Email);
+            if (user == null)
+                RedirectToAction(nameof(ResetPasswordConfirmation));
+
+            var resetPassResult = await userManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
+            if (!resetPassResult.Succeeded)
             {
-                ModelState.AddModelError("", "There is no user with that email.");
+                foreach (var error in resetPassResult.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+                return View();
+            }
+            return RedirectToAction(nameof(ResetPasswordConfirmation));
+        }
+
+        [HttpGet]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult DeleteAccount()
+        {
+            var user = context.Users.First(u => u.UserName == User.Identity.Name);
+            signInManager.SignOutAsync();
+            userManager.DeleteAsync(user);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult ChangePassword(ChangePasswordModel model)
+        {
+            var user = context.Users.First(u => u.UserName == User.Identity.Name);
+            var result = userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password).Result;
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Change error");
                 return View(model);
             }
 
-            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callback = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
-
-            var message = new Message(new string[] { user.Email }, "Reset password token", callback, null);
-            await emailSender.SendEmailAsync(message);
-
-            return RedirectToAction("", "");
+            return RedirectToAction("AccountDetails");
         }
     }
 }

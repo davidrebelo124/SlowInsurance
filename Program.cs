@@ -23,6 +23,17 @@ builder.Services.AddIdentity<ClientEntity, IdentityRole>()
                 .AddEntityFrameworkStores<InsuranceDbContext>()
                 .AddDefaultTokenProviders();
 
+//builder.Services.Configure<IdentityOptions>(options =>
+//{
+//    // Default Password settings.
+//    options.Password.RequireDigit = false;
+//    options.Password.RequireLowercase = false;
+//    options.Password.RequireNonAlphanumeric = false;
+//    options.Password.RequireUppercase = false;
+//    options.Password.RequiredLength = 3;
+//    options.Password.RequiredUniqueChars = 0;
+//});
+
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
    opt.TokenLifespan = TimeSpan.FromHours(2));
 

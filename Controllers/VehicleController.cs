@@ -23,7 +23,7 @@ namespace SlowInsurance.Controllers
             var vehicles = context.Users.First(u => u.UserName == User.Identity.Name).Vehicles;
             if(vehicles == null)
                 return View(null);
-            var model = vehicles.Select(v => new VehicleViewModel
+            var model = vehicles.Select(v => new VehicleModel
             {
                 Id = v.Id,
                 VehicleType = v.VehicleType,
