@@ -6,7 +6,7 @@ namespace SlowInsurance.Entity
     {
         public VehicleEntity()
         {
-            Payments = new List<PaymentEntity>();
+            Payments = new List<InvoiceEntity>();
             Accidents = new List<AccidentEntity>();
         }
 
@@ -23,7 +23,7 @@ namespace SlowInsurance.Entity
         public string? AdhesionDate { get; set; }
 
 
-        public virtual ICollection<PaymentEntity> Payments { get; set; }
+        public virtual ICollection<InvoiceEntity> Payments { get; set; }
         public virtual ICollection<AccidentEntity> Accidents { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SlowInsurance.Entity
 {
-    public class PaymentEntity
+    public class InvoiceEntity
     {
         public int Id { get; set; }
         [Required]
@@ -10,6 +10,6 @@ namespace SlowInsurance.Entity
         [Required]
         public float Value { get; set; }
         [Required]
-        public string? Validity { get; set; }
+        public string? Val { get; set; }
     }
 }

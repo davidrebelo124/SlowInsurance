@@ -11,7 +11,7 @@ namespace SlowInsurance.Repo
         }
 
         public DbSet<VehicleEntity> Vehicle { get; set; }
-        public DbSet<PaymentEntity> Payment { get; set; }
+        public DbSet<InvoiceEntity> Invoice { get; set; }
         public DbSet<AccidentEntity> Accident { get; set; }
 
     }
