@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SlowInsurance.Entity;
-using SlowInsurance.Models;
+using SlowInsurance.Models.Account;
 using SlowInsurance.Repo;
 
 namespace SlowInsurance.Controllers
@@ -68,7 +68,7 @@ namespace SlowInsurance.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
@@ -257,13 +257,15 @@ namespace SlowInsurance.Controllers
         [Authorize]
         public IActionResult ChangePassword(ChangePasswordModel model)
         {
+            if (!ModelState.IsValid)
+                return RedirectToAction("AccountDetails");
+
             var user = context.Users.First(u => u.UserName == User.Identity.Name);
             var result = userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password).Result;
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Change error");
-                return View(model);
+                return RedirectToAction("AccountDetails");
             }
 
             return RedirectToAction("AccountDetails");

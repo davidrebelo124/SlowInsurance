@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SlowInsurance.Models
+namespace SlowInsurance.Models.Account
 {
     public class LoginModel
     {

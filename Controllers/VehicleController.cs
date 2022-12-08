@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SlowInsurance.Entity;
 using SlowInsurance.Models;
+using SlowInsurance.Models.Vehicle;
 using SlowInsurance.Repo;
 
 namespace SlowInsurance.Controllers

@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SlowInsurance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -16,55 +17,8 @@
     </style>
 </head>
 <body>
-    @*<header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-
-                <a class="navbar-brand flex-grow-1" asp-controller="Home" asp-action="Index"><i class="bi bi-award-fill"></i> SlowInsurance</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse d-flex">
-
-                    <ul class="navbar-nav col-12 col-md-auto mb-2 justify-content-evenly mb-md-0">
-                        <li><a asp-controller="Vehicle" asp-action="ListVehicles" class="nav-link px-2 link-secondary">Vehicles</a></li>
-                    </ul>
-
-                    @if (signInManager.IsSignedIn(User))
-                    {
-                        <ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse">
-                            <li class="nav-item px-1">
-                                <form method="post" asp-action="Logout" asp-controller="Account">
-                                    <button type="submit" class="btn btn-primary">
-                                        Logout @userManager.FindByEmailAsync(User.Identity.Name).Result.Name;
-                                    </button>
-                                </form>
-                            </li>
-                            <li class="nav-item px-3 py-1">
-                                <a asp-action="AccountDetails" asp-controller="Account" class="dropdown-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" alt="default" width="32" height="32" class="rounded-circle"></a>
-                            </li>
-                        </ul>
-                    }
-                    else
-                    {
-                        <ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse">
-                            <li class="nav-item px-1">
-                                <a class="btn btn-primary" asp-controller="Account" asp-action="Login" role="button">Login</a>
-                            </li>
-                            <li class="nav-item px-1">
-                                <a class="btn btn-primary" asp-controller="Account" asp-action="SignIn" role="button">Sign In</a>
-                            </li>
-                        </ul>
-                    }
-                </div>
-            </div>
-        </nav>
-    </header>*@
-
     <header class="p-3 text-bg-dark">
-        <div class="container">
+        <div class="container-fluid d-grid gap-3 align-items-center">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between">
                 <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                     <span class="fs-4">SlowInsurance</span>
@@ -77,8 +31,8 @@
                 @if (signInManager.IsSignedIn(User))
                 {
                     <div class="dropdown text-end">
-                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            @userManager.FindByEmailAsync(User.Identity.Name).Result.Name;
+                        <a class="d-block text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name
                         </a>
                         <ul class="dropdown-menu text-small">
                             <li><a class="dropdown-item" asp-action="AccountDetails" asp-controller="Account">Profile</a></li>

@@ -1,7 +1,7 @@
 ﻿using IbanNet.DataAnnotations;
 using System.ComponentModel.DataAnnotations;
 
-namespace SlowInsurance.Models
+namespace SlowInsurance.Models.Account
 {
     public class RegisterModel
     {
@@ -41,7 +41,7 @@ namespace SlowInsurance.Models
         public string? Password { get; set; }
         [Required]
         [Display(Name = "Confirm Password")]
-        [Compare("Password", 
+        [Compare("Password",
             ErrorMessage = "Password and confirmation password do not match.")]
         public string? ConfirmPassword { get; set; }
     }

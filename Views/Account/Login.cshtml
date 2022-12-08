@@ -12,10 +12,13 @@
             <label asp-for="Email">Email address</label>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-        <div class="form-floating my-1">
-            <input type="password" class="form-control" asp-for="Password" placeholder="Password">
-            <label asp-for="Password">Password</label>
-            <span asp-validation-for="Password" class="text-danger"></span>
+        <div class="input-group">
+            <div class="form-floating my-1">
+                <input type="password" class="form-control" id="password" asp-for="Password" placeholder="Password">
+                <label asp-for="Password">Password</label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <i class="far fa-eye input-group-text my-1" style="cursor: pointer;height: 90%;" id="togglePassword"></i>
         </div>
 
         <div class="checkbox my-3">

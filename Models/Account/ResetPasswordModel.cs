@@ -1,13 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SlowInsurance.Models
+namespace SlowInsurance.Models.Account
 {
-    public class ChangePasswordModel
+    public class ResetPasswordModel
     {
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Current Password")]
-        public string? CurrentPassword { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
@@ -15,5 +11,9 @@ namespace SlowInsurance.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         [Display(Name = "Confirm Password")]
         public string? ConfirmPassword { get; set; }
+        [Required]
+        public string? Email { get; set; }
+        [Required]
+        public string? Token { get; set; }
     }
 }
