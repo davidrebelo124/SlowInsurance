@@ -1,22 +1,31 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IbanNet.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace SlowInsurance.Models
 {
     public class RegisterModel
     {
         [Required]
+        [MaxLength(70)]
         public string? Name { get; set; }
         [Required]
+        [MaxLength(150)]
         public string? Address { get; set; }
         [Required]
+        [MaxLength(9)]
+        [DataType(DataType.PhoneNumber)]
         public string? NIF { get; set; }
         [Required]
+        [Iban]
         public string? IBAN { get; set; }
         [Required]
+        [DataType(DataType.Date)]
         public string? Birthday { get; set; }
         [Required]
         public string? Historic { get; set; }
         [Required]
+        [MaxLength(9)]
+        [DataType(DataType.PhoneNumber)]
         [Display(Name = "Driver's License Number")]
         public string? DriverLicense { get; set; }
         [Required]

@@ -2,10 +2,23 @@
 @{
     ViewData["Title"] = "Sign In";
 }
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 
 <form asp-controller="Account" asp-action="SignIn" method="post" class="row g-3">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-    <div asp-validation-summary="All" class="text-danger"></div>
+    @*<div asp-validation-summary="All" class="text-danger"></div>*@
     <div class="form-floating my-1 col-md-6">
         <input type="text" class="form-control" asp-for="Name" placeholder="Name">
         <label asp-for="Name"></label>
@@ -22,7 +35,7 @@
         <span asp-validation-for="Address" class="text-danger"></span>
     </div>
     <div class="form-floating my-1 col-md-6">
-        <input type="text" class="form-control" asp-for="NIF" placeholder="NIF">
+        <input type="number" class="form-control" asp-for="NIF" placeholder="NIF">
         <label asp-for="NIF"></label>
         <span asp-validation-for="NIF" class="text-danger"></span>
     </div>
@@ -32,7 +45,7 @@
         <span asp-validation-for="IBAN" class="text-danger"></span>
     </div>
     <div class="form-floating my-1 col-md-6">
-        <input type="tel" class="form-control" asp-for="PhoneNumber" placeholder="Phone Number">
+        <input type="number" class="form-control" asp-for="PhoneNumber" placeholder="Phone Number">
         <label asp-for="PhoneNumber"></label>
         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
     </div>
@@ -42,7 +55,7 @@
         <span asp-validation-for="Birthday" class="text-danger"></span>
     </div>
     <div class="form-floating my-1 col-16">
-        <input type="text" class="form-control" asp-for="DriverLicense" placeholder="Driver's License Number">
+        <input type="number" class="form-control" asp-for="DriverLicense" placeholder="Driver's License Number">
         <label asp-for="DriverLicense"></label>
         <span asp-validation-for="DriverLicense" class="text-danger"></span>
     </div>
