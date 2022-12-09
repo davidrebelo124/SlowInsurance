@@ -3,4 +3,25 @@
     ViewData["Title"] = "Add Vehicle";
 }
 
+<form asp-controller="Vehicle" asp-action="AddVehicle" method="post" class="row g-3">
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    @*<div asp-validation-summary="All" class="text-danger"></div>*@
+    <div class="form-floating my-1 col-md-6">
+        <input type="text" class="form-control" asp-for="VehicleType">
+        <label asp-for="VehicleType"></label>
+        <span asp-validation-for="VehicleType" class="text-danger"></span>
+    </div>
+    <div class="form-floating my-1 col-16">
+        <input type="text" class="form-control" asp-for="Model">
+        <label asp-for="Model"></label>
+        <span asp-validation-for="Model" class="text-danger"></span>
+    </div>
+    <div class="form-floating my-1 col-md-6">
+        <input type="date" class="form-control" asp-for="AdhesionDate">
+        <label asp-for="AdhesionDate"></label>
+        <span asp-validation-for="AdhesionDate" class="text-danger"></span>
+    </div>
 
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <a asp-action="Login" asp-controller="Account" class="align-self-sm-center align-content-sm-center align-items-sm-center justify-content-sm-center">Already have an account?</a>
+</form>
