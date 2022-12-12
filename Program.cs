@@ -1,5 +1,6 @@
 using EmailService;
 using IbanNet;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,6 +43,15 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+WebHost.CreateDefaultBuilder(args)
+            .UseKestrel(options =>
+            {
+                options.ConfigureEndpointDefaults(listenOptions =>
+                {
+                    listenOptions.UseConnectionLogging();
+                });
+            });
 
 //builder.Services.Configure<IdentityOptions>(options =>
 //{
