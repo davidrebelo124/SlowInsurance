@@ -30,9 +30,9 @@ namespace SlowInsurance.Controllers
                     Id = v.Id,
                     VehicleType = Enum.Parse<VehicleType>(v.VehicleType),
                     Model = v.Model,
-                    RegistrationDate = DateTime.Parse(v.RegistrationDate),
+                    RegistrationDate = DateTime.ParseExact(v.RegistrationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                     Plate = v.Plate,
-                    AdhesionDate = DateTime.Parse(v.AdhesionDate),
+                    AdhesionDate = DateTime.ParseExact(v.AdhesionDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                 }).ToList(),
             }).ToList();
 

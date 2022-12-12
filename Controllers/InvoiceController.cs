@@ -46,12 +46,12 @@ namespace SlowInsurance.Controllers
                                                 Model = v.Model,
                                                 Plate = v.Plate,
                                                 VehicleType = Enum.Parse<VehicleType>(v.VehicleType),
-                                                AdhesionDate = DateTime.Parse(v.AdhesionDate),
-                                                RegistrationDate = DateTime.Parse(v.RegistrationDate),
+                                                AdhesionDate = DateTime.ParseExact(v.AdhesionDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                                                RegistrationDate = DateTime.ParseExact(v.RegistrationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                                                 Id = v.Id })
                                             .First()),
-                ExpirationDate = DateTime.Parse(i.ExpirationDate),
-                IssuedDate = DateTime.Parse(i.IssuedDate),
+                ExpirationDate = DateTime.ParseExact(i.ExpirationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                IssuedDate = DateTime.ParseExact(i.IssuedDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                 PaymentType = Enum.Parse<PaymentType>(i.PaymentType),
                 Value = i.Value,
             });
