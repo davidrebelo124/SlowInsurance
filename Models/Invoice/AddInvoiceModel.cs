@@ -1,4 +1,5 @@
-﻿using SlowInsurance.Models.Vehicle;
+﻿using Microsoft.AspNetCore.Mvc;
+using SlowInsurance.Models.Vehicle;
 using System.ComponentModel.DataAnnotations;
 
 namespace SlowInsurance.Models.Invoice
