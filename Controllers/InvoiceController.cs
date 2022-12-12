@@ -7,6 +7,7 @@ using SlowInsurance.Models.Vehicle;
 using SlowInsurance.Repo;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace SlowInsurance.Controllers
 {
@@ -93,10 +94,15 @@ namespace SlowInsurance.Controllers
                 PaymentType = model.PaymentType.ToString(),
                 Value = DEFAULT_VALUE,
             };
-            var vModel = JsonSerializer.Deserialize<AddVehicleModel>(model.Vehicle);
+            var vModel = JsonSerializer.Deserialize<AddVehicleModel>(model.Vehicle.ToString());
             if (vModel.RegistrationDate > DateTime.Now)
             {
                 ModelState.AddModelError("", "Not a valid date");
+                return View(model);
+            }
+            if (!Regex.IsMatch(vModel.Plate, @"^(([A-Z]{2}-\d{2}-(\d{2}|[A-Z]{2}))|(\d{2}-(\d{2}-[A-Z]{2}|[A-Z]{2}-\d{2})))$"))
+            {
+                ModelState.AddModelError("", "Not a valid plate");
                 return View(model);
             }
             var vehicle = new VehicleEntity

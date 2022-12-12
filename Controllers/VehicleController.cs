@@ -58,16 +58,6 @@ namespace SlowInsurance.Controllers
                 return View(modell);
             }
 
-            var vehicles = context.Users.First(u => u.UserName == User.Identity.Name).Vehicles;
-            var vehicle = new VehicleEntity
-            {
-                AdhesionDate = DateTime.Now.ToString("dd/MM/yyyy"),
-                Model = modell.Model,
-                RegistrationDate = modell.RegistrationDate.ToString("dd/MM/yyyy"),
-                Plate = modell.Plate,
-                VehicleType = modell.VehicleType.ToString(),
-            };
-
             TempData["Vehicle"] = Encoding.UTF8.GetString(JsonSerializer.SerializeToUtf8Bytes(modell));
             return RedirectToAction("AddInvoiceWithVehicle", "Invoice");
         }

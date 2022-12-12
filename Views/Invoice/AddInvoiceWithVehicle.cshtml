@@ -2,7 +2,11 @@
 @model AddInvoiceModel
 @{
     ViewData["Title"] = "Add Invoice";
-    var vModel = JsonSerializer.Deserialize<AddVehicleModel>(Model.Vehicle).Model;
+    var vModel = "";
+    if (Model.Vehicle != null)
+    {
+        vModel = JsonSerializer.Deserialize<AddVehicleModel>(Model.Vehicle).Model;
+    }
 }
 <style>
     /* Chrome, Safari, Edge, Opera */
