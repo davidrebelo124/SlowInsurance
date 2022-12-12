@@ -45,9 +45,9 @@ namespace SlowInsurance.Controllers
                                             .Select(v => new VehicleModel { 
                                                 Model = v.Model,
                                                 Plate = v.Plate,
-                                                VehicleType = v.VehicleType,
-                                                AdhesionDate = v.AdhesionDate,
-                                                RegistrationDate = v.RegistrationDate,
+                                                VehicleType = Enum.Parse<VehicleType>(v.VehicleType),
+                                                AdhesionDate = DateTime.Parse(v.AdhesionDate),
+                                                RegistrationDate = DateTime.Parse(v.RegistrationDate),
                                                 Id = v.Id })
                                             .First()),
                 ExpirationDate = DateTime.Parse(i.ExpirationDate),
