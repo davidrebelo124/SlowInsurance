@@ -42,20 +42,23 @@ namespace SlowInsurance.Controllers
             {
                 Vehicle = JsonSerializer.Serialize(
                                             vehicles.Where(v => v.Invoices.Contains(i))
-                                            .Select(v => new VehicleModel { 
+                                            .Select(v => new VehicleModel
+                                            {
                                                 Model = v.Model,
                                                 Plate = v.Plate,
                                                 VehicleType = Enum.Parse<VehicleType>(v.VehicleType),
                                                 AdhesionDate = DateTime.ParseExact(v.AdhesionDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                                                 RegistrationDate = DateTime.ParseExact(v.RegistrationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                                                Id = v.Id })
+                                                Id = v.Id
+                                            })
                                             .First()),
-                ExpirationDate = DateTime.ParseExact(i.ExpirationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                ExpirationDate = i.ExpirationDate == string.Empty ? DateTime.MinValue : DateTime.ParseExact(i.ExpirationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                 IssuedDate = DateTime.ParseExact(i.IssuedDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                 PaymentType = Enum.Parse<PaymentType>(i.PaymentType),
                 Value = i.Value,
-            });
-            return View(invoices.ToList());
+            }).OrderByDescending(i => i.ExpirationDate != DateTime.MinValue).ThenBy(i => i.ExpirationDate).ToList();
+
+            return View(invoices);
         }
 
         [HttpGet]
@@ -148,7 +151,7 @@ namespace SlowInsurance.Controllers
             if (DateTime.Parse(invoice.ExpirationDate).AddMonths(-1) > DateTime.Now)
             {
                 ModelState.AddModelError("", "Does not need renewal");
-                return View(invoice);
+                return View(modell);
             }
 
             var renewal = new InvoiceEntity
@@ -168,6 +171,7 @@ namespace SlowInsurance.Controllers
                 .First()
                 .Invoices
                 .Add(renewal);
+            invoice.ExpirationDate = null;
             context.SaveChanges();
 
             return RedirectToAction("ListInvoices", "Invoice");

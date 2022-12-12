@@ -42,14 +42,22 @@ else
                     <th scope="row">@vehicle.Model</th>
                     <td>@invoice.Value</td>
                     <td>@invoice.IssuedDate.Value.ToShortDateString()</td>
-                    <td>@invoice.ExpirationDate.Value.ToShortDateString()</td>
-                    @if (invoice.IsRenewalNeeded)
+                    @if (invoice.ExpirationDate.Value != DateTime.MinValue)
                     {
-                        <td><a asp-action="RenewInvoice" asp-controller="Invoice" asp-route-id="@vehicle.Plate" class="btn btn-outline-dark">Renew</a></td>
+                        <td>@invoice.ExpirationDate.Value.ToShortDateString()</td>
+                        @if (invoice.IsRenewalNeeded)
+                        {
+                            <td><a asp-action="RenewInvoice" asp-controller="Invoice" asp-route-id="@vehicle.Plate" class="btn btn-outline-dark">Renew</a></td>
+                        }
+                        else
+                        {
+                            <td>/  /</td>
+                        }
                     }
                     else
                     {
-                        <td>/ /</td>
+                        <td>/  /</td>
+                        <td>/  /</td>
                     }
                 </tr>
             }
