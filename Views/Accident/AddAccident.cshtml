@@ -6,7 +6,7 @@
 <form asp-controller="Accident" asp-action="AddAccident" method="post" class="row g-3" autocomplete="off">
     <h1 class="h3 mb-3 fw-normal">Add Accident</h1>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-floating my-1 col-md-6">
+    <div class="form-floating my-1 col-md-16">
         <input type="text" class="form-control" asp-for="Location">
         <label asp-for="Location"></label>
         <span asp-validation-for="Location" class="text-danger"></span>
@@ -23,7 +23,7 @@
     </div>
     <div class="form-floating my-1 col-md-6">
         <input type="text" class="form-control" asp-for="Vehicles">
-        <label>Vehicles - Seperate Plates by ','</label>
+        <label>Vehicles - Plates Seperated by ','</label>
         <span asp-validation-for="Vehicles" class="text-danger"></span>
     </div>
 

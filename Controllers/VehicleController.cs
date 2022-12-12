@@ -61,9 +61,9 @@ namespace SlowInsurance.Controllers
             var vehicles = context.Users.First(u => u.UserName == User.Identity.Name).Vehicles;
             var vehicle = new VehicleEntity
             {
-                AdhesionDate = DateTime.Now.ToShortDateString(),
+                AdhesionDate = DateTime.Now.ToString("dd/MM/yyyy"),
                 Model = modell.Model,
-                RegistrationDate = modell.RegistrationDate.ToShortDateString(),
+                RegistrationDate = modell.RegistrationDate.ToString("dd/MM/yyyy"),
                 Plate = modell.Plate,
                 VehicleType = modell.VehicleType.ToString(),
             };

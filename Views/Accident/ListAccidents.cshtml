@@ -29,8 +29,13 @@ else
                                 @accident.Location
                             </div>
                             <div class="card-body">
-                                <p class="card-text">@accident.Description</p>
-                                <p class="card-text">@String.Join(", ", accident.Vehicles.Select(v => v.Plate))</p>
+                                <p class="card-text h6">@accident.Description</p>
+                                <p class="card-text text-secondary">
+                                    @foreach (var plate in accident.Vehicles.Select(v => v.Plate))
+                                    {
+                                        @plate<br />
+                                    }
+                                </p>
                             </div>
                         </div>
                     </div>

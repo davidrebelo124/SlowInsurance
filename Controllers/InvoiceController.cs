@@ -88,8 +88,8 @@ namespace SlowInsurance.Controllers
             
             var invoice = new InvoiceEntity
             {
-                ExpirationDate = DateTime.Now.AddYears(1).ToShortDateString(),
-                IssuedDate = DateTime.Now.ToShortDateString(),
+                ExpirationDate = DateTime.Now.AddYears(1).ToString("dd/MM/yyyy"),
+                IssuedDate = DateTime.Now.ToString("dd/MM/yyyy"),
                 PaymentType = model.PaymentType.ToString(),
                 Value = DEFAULT_VALUE,
             };
@@ -103,8 +103,8 @@ namespace SlowInsurance.Controllers
             {
                 Model = vModel.Model,
                 Plate = vModel.Plate,
-                AdhesionDate = DateTime.Now.ToShortDateString(),
-                RegistrationDate = vModel.RegistrationDate.ToShortDateString(),
+                AdhesionDate = DateTime.Now.ToString("dd/MM/yyyy"),
+                RegistrationDate = vModel.RegistrationDate.ToString("dd/MM/yyyy"),
                 VehicleType = vModel.VehicleType.ToString(),
             };
 
@@ -157,8 +157,8 @@ namespace SlowInsurance.Controllers
             var renewal = new InvoiceEntity
             {
                 Value = DEFAULT_VALUE,
-                ExpirationDate = DateTime.Now.AddYears(1).ToShortDateString(),
-                IssuedDate = DateTime.Now.ToShortDateString(),
+                ExpirationDate = DateTime.Now.AddYears(1).ToString("dd/MM/yyyy"),
+                IssuedDate = DateTime.Now.ToString("dd/MM/yyyy"),
                 PaymentType = modell.PaymentType.ToString(),
             };
 

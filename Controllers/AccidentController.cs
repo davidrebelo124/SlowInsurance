@@ -57,8 +57,8 @@ namespace SlowInsurance.Controllers
             }
 
             var vPlates = new List<string>();
-            if (model.Vehicles.Contains(", "))
-                vPlates = model.Vehicles.Split(", ").ToList();
+            if (model.Vehicles.Contains(","))
+                vPlates = model.Vehicles.Split(",").ToList();
             else
                 vPlates.Add(model.Vehicles);
 
@@ -67,11 +67,16 @@ namespace SlowInsurance.Controllers
             {
                 if (context.Vehicle.Any(ve => ve.Plate == v))
                     vehicles.Add(context.Vehicle.Where(ve => ve.Plate == v).First());
+                else
+                {
+                    ModelState.AddModelError("", $"{v} is not a valid plate");
+                    return View(model);
+                }
             }
 
             var accident = new AccidentEntity
             {
-                Date = model.Date.Value.ToShortDateString(),
+                Date = model.Date.Value.ToString("dd/MM/yyyy"),
                 Description = model.Description,
                 Location = model.Location,
                 Vehicles = vehicles,
