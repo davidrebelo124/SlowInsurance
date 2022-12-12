@@ -2,10 +2,13 @@ using EmailService;
 using IbanNet;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SlowInsurance.Entity;
 using SlowInsurance.Repo;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +56,19 @@ WebHost.CreateDefaultBuilder(args)
                 });
             });
 
+var culture = CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+var dateformat = new DateTimeFormatInfo
+{
+    ShortDatePattern = "dd/MM/yyyy",
+    LongDatePattern = "dd/MM/yyyy hh:mm:ss tt"
+};
+culture.DateTimeFormat = dateformat;
+
+var supportedCultures = new[]
+{
+    culture
+};
+
 //builder.Services.Configure<IdentityOptions>(options =>
 //{
 //    // Default Password settings.
@@ -89,5 +105,13 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(culture),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 app.Run();

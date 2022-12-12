@@ -48,13 +48,13 @@ namespace SlowInsurance.Controllers
                                                 Model = v.Model,
                                                 Plate = v.Plate,
                                                 VehicleType = Enum.Parse<VehicleType>(v.VehicleType),
-                                                AdhesionDate = DateTime.ParseExact(v.AdhesionDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                                                RegistrationDate = DateTime.ParseExact(v.RegistrationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                                                AdhesionDate = DateTime.ParseExact(v.AdhesionDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
+                                                RegistrationDate = DateTime.ParseExact(v.RegistrationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
                                                 Id = v.Id
                                             })
                                             .First()),
-                ExpirationDate = i.ExpirationDate == string.Empty ? DateTime.MinValue : DateTime.ParseExact(i.ExpirationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                IssuedDate = DateTime.ParseExact(i.IssuedDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                ExpirationDate = i.ExpirationDate == string.Empty ? DateTime.MinValue : DateTime.ParseExact(i.ExpirationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
+                IssuedDate = DateTime.ParseExact(i.IssuedDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
                 PaymentType = Enum.Parse<PaymentType>(i.PaymentType),
                 Value = i.Value,
             }).OrderByDescending(i => i.ExpirationDate != DateTime.MinValue).ThenBy(i => i.ExpirationDate).ToList();
@@ -154,7 +154,7 @@ namespace SlowInsurance.Controllers
                 return NotFound();
 
             var invoice = vehicles.First().Invoices.OrderByDescending(i => i.ExpirationDate).First();
-            if (DateTime.Parse(invoice.ExpirationDate).AddMonths(-1) > DateTime.Now)
+            if (DateTime.ParseExact(invoice.ExpirationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture).AddMonths(-1) > DateTime.Now)
             {
                 ModelState.AddModelError("", "Does not need renewal");
                 return View(modell);
