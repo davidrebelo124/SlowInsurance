@@ -28,11 +28,11 @@ namespace SlowInsurance.Controllers
                 Vehicles = a.Vehicles.Select(v => new VehicleModel
                 {
                     Id = v.Id,
-                    VehicleType = Enum.Parse<VehicleType>(v.VehicleType),
+                    VehicleType = v.VehicleType,
                     Model = v.Model,
-                    RegistrationDate = DateTime.Parse(v.RegistrationDate),
+                    RegistrationDate = v.RegistrationDate,
                     Plate = v.Plate,
-                    AdhesionDate = DateTime.Parse(v.AdhesionDate),
+                    AdhesionDate = v.AdhesionDate,
                 }).ToList(),
             }).ToList();
 
