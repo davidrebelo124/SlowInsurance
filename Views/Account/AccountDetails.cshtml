@@ -2,14 +2,29 @@
 @{
     ViewData["Title"] = "Account Details";
 }
+@*<script>
+    new bootstrap.Toast(document.getElementById('toast')).show;
+</script>
+
+@if (TempData["Action"] is not null)
+{
+    <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
+        <div class="d-flex">
+            <div class="toast-body">
+                @TempData["Action"]
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+}*@
 
 <div class="container py-4">
     <form asp-controller="Account" asp-action="AccountDetails" method="post" class="row g-3">
-        <h1 class="h3 mb-3 fw-normal">User details</h1>
+        <h1 class="h3 mb-3 fw-normal fw-bold">User details</h1>
 
         <input hidden type="text" class="form-control" asp-for="Email" value="@Model.Email">
 
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-floating my-1 col-md-6">
             <input type="text" class="form-control" asp-for="Name" value="@Model.Name">
             <label asp-for="Name"></label>
@@ -66,13 +81,10 @@
             <label asp-for="ConfirmPassword"></label>
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>*@
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Update Details</button>
-
-        <div class="col-6 col-md-4">
-            <div class="list-group">
-                <a class="btn list-group-item list-group-item-action list-group-item-dark" data-bs-toggle="modal" data-bs-target="#ChangePassword">Change Password</a>
-                <a class="btn list-group-item list-group-item-action list-group-item-dark" data-bs-toggle="modal" data-bs-target="#DeleteAccount">Delete Account</a>
-            </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-lg btn-primary" type="submit">Update Details</button>
+            <a class="btn btn-lg btn-secondary" data-bs-toggle="modal" data-bs-target="#ChangePassword">Change Password</a>
+            <a class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteAccount">Delete Account</a>
         </div>
     </form>
 </div>

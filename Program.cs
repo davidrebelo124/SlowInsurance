@@ -20,11 +20,28 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddTransient<IIbanValidator, IbanValidator>();
 
-builder.Services.AddDbContext<InsuranceDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<InsuranceDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
+                                                             sqlServerOptionsAction: sqlOptions =>
+                                                             {
+                                                                 sqlOptions.EnableRetryOnFailure(
+                                                                 maxRetryCount: 10,
+                                                                 maxRetryDelay: TimeSpan.FromSeconds(30),
+                                                                 errorNumbersToAdd: null);
+                                                             }
+                                                  ));
 
 builder.Services.AddIdentity<ClientEntity, IdentityRole>()
                 .AddEntityFrameworkStores<InsuranceDbContext>()
                 .AddDefaultTokenProviders();
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 //builder.Services.Configure<IdentityOptions>(options =>
 //{
@@ -56,6 +73,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

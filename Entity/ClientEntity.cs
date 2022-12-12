@@ -25,6 +25,6 @@ namespace SlowInsurance.Entity
         [Required]
         public string? DriverLicense { get; set; }
 
-        public ICollection<VehicleEntity> Vehicles { get; set; }
+        public virtual ICollection<VehicleEntity> Vehicles { get; set; }
     }
 }

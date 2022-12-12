@@ -8,8 +8,10 @@ namespace SlowInsurance.Entity
         [Required]
         public string? PaymentType { get; set; }
         [Required]
-        public float Value { get; set; }
+        public double Value { get; set; }
         [Required]
-        public string? Val { get; set; }
+        public string? ExpirationDate { get; set; }
+        [Required]
+        public string? IssuedDate { get; set; }
     }
 }

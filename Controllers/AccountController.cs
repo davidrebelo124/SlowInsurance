@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SlowInsurance.Entity;
 using SlowInsurance.Models.Account;
 using SlowInsurance.Repo;
@@ -36,6 +37,11 @@ namespace SlowInsurance.Controllers
         {
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
+            if (DateTime.Parse(model.Birthday) >= DateTime.Now.AddYears(-18))
+            {
+                ModelState.AddModelError("", "Not a valid date");
+                return View(model);
+            }
             if (ModelState.IsValid)
             {
                 var user = new ClientEntity
@@ -247,7 +253,13 @@ namespace SlowInsurance.Controllers
         [Authorize]
         public IActionResult DeleteAccount()
         {
-            var user = context.Users.First(u => u.UserName == User.Identity.Name);
+            var user = context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).First();
+            if (user.Vehicles.Any())
+            {
+                TempData["Action"] = "Could not delete account. Contact our staff for details.";
+                return RedirectToAction("AccountDetails");
+            }
+
             signInManager.SignOutAsync();
             userManager.DeleteAsync(user);
             return RedirectToAction("Index", "Home");

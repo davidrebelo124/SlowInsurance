@@ -1,0 +1,18 @@
+﻿@model DeleteModel
+
+<div class="modal fade" aria-hidden="true" tabindex="-1" id="Delete@{Html.Raw(Model.Id);}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you certain that you want to delete @Model.String</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a asp-action="@Model.Action" asp-controller="@Model.Controller" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

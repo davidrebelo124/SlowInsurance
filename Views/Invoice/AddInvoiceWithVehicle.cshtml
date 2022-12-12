@@ -1,0 +1,43 @@
+﻿@using System.Text.Json;
+@model AddInvoiceModel
+@{
+    ViewData["Title"] = "Add Invoice";
+    var vModel = JsonSerializer.Deserialize<AddVehicleModel>(Model.Vehicle).Model;
+}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<form asp-controller="Invoice" asp-action="AddInvoiceWithVehicle" method="post" class="row g-3">
+    <h1 class="h3 mb-3 fw-normal">Add Invoice to @vModel</h1>
+    <input hidden asp-for="Vehicle" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-6 form-floating">
+        <select class="form-select" asp-for="PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()">
+            <option value="" selected>Choose a type</option>
+        </select>
+        <label asp-for="PaymentType"></label>
+        <span asp-validation-for="PaymentType" class="text-danger"></span>
+    </div>
+    <div class="form-floating my-1 col-md-6">
+        <input type="number" readonly class="form-control-plaintext" asp-for="Value">
+        <label asp-for="Value"></label>
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+
+    <div class="container-md px-4 my-5">
+        <div class="row gx-md-3">
+            <button class="btn btn-lg btn-primary col mx-1" type="submit">Add Invoice</button>
+            <a asp-action="ListInvoices" asp-controller="Invoice" class="btn btn-lg btn-secondary col mx-1">Cancel</a>
+        </div>
+    </div>
+</form>

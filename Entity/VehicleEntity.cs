@@ -1,12 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace SlowInsurance.Entity
 {
+    [Index(nameof(Plate), IsUnique = true)]
     public class VehicleEntity
     {
         public VehicleEntity()
         {
-            Payments = new List<InvoiceEntity>();
+            Invoices = new List<InvoiceEntity>();
             Accidents = new List<AccidentEntity>();
         }
 
@@ -23,7 +25,7 @@ namespace SlowInsurance.Entity
         public string? AdhesionDate { get; set; }
 
 
-        public virtual ICollection<InvoiceEntity> Payments { get; set; }
+        public virtual ICollection<InvoiceEntity> Invoices { get; set; }
         public virtual ICollection<AccidentEntity> Accidents { get; set; }
     }
 }

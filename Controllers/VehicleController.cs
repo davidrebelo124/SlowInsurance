@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SlowInsurance.Entity;
 using SlowInsurance.Models;
 using SlowInsurance.Models.Vehicle;
 using SlowInsurance.Repo;
+using System.Text;
+using System.Text.Json;
 
 namespace SlowInsurance.Controllers
 {
@@ -21,17 +24,18 @@ namespace SlowInsurance.Controllers
         [HttpGet]
         public IActionResult ListVehicles()
         {
-            var vehicles = context.Users.First(u => u.UserName == User.Identity.Name).Vehicles;
+            var vehicles = context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).First().Vehicles.ToList();
             if(vehicles == null)
-                return View(null);
+                return View();
+
             var model = vehicles.Select(v => new VehicleModel
             {
                 Id = v.Id,
-                VehicleType = v.VehicleType,
+                VehicleType = Enum.Parse<VehicleType>(v.VehicleType),
                 Model = v.Model,
-                RegistrationDate = v.RegistrationDate,
+                RegistrationDate = DateTime.Parse(v.RegistrationDate),
                 Plate = v.Plate,
-                AdhesionDate = v.AdhesionDate
+                AdhesionDate = DateTime.Parse(v.AdhesionDate),
             });
             return View(model);
         }
@@ -42,15 +46,30 @@ namespace SlowInsurance.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddVehicle(AddVehicleViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
+        [HttpPost]
+        public IActionResult AddVehicle(AddVehicleModel modell)
+        {
+            if (!ModelState.IsValid)
+                return View(modell);
 
-        //    }
+            if (modell.RegistrationDate > DateTime.Now.AddYears(-18))
+            {
+                ModelState.AddModelError("", "Not a valid date");
+                return View(modell);
+            }
 
-        //    return View(model);
-        //}
+            var vehicles = context.Users.First(u => u.UserName == User.Identity.Name).Vehicles;
+            var vehicle = new VehicleEntity
+            {
+                AdhesionDate = DateTime.Now.ToShortDateString(),
+                Model = modell.Model,
+                RegistrationDate = modell.RegistrationDate.ToShortDateString(),
+                Plate = modell.Plate,
+                VehicleType = modell.VehicleType.ToString(),
+            };
+
+            TempData["Vehicle"] = Encoding.UTF8.GetString(JsonSerializer.SerializeToUtf8Bytes(modell));
+            return RedirectToAction("AddInvoiceWithVehicle", "Invoice");
+        }
     }
 }

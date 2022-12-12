@@ -19,17 +19,19 @@
 <body>
     <header class="p-3 text-bg-dark">
         <div class="container-fluid d-grid gap-3 align-items-center">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
                 <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                     <span class="fs-4">SlowInsurance</span>
                 </a>
 
-                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <li><a asp-controller="Vehicle" asp-action="ListVehicles" class="nav-link px-2 text-white">Vehicles</a></li>
-                </ul>
-
                 @if (signInManager.IsSignedIn(User))
                 {
+                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                        <li><a asp-controller="Vehicle" asp-action="ListVehicles" class="nav-link px-2 text-white">Vehicles</a></li>
+                        <li><a asp-controller="Invoice" asp-action="ListInvoices" asp-route-id="" class="nav-link px-2 text-white">Invoices</a></li>
+                        <li><a asp-controller="Accident" asp-action="ListAccidents" class="nav-link px-2 text-white">Accident</a></li>
+                    </ul>
+
                     <div class="dropdown text-end">
                         <a class="d-block text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             @userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name
@@ -43,6 +45,9 @@
                 }
                 else
                 {
+                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                        <li><span></span></li>
+                    </ul>
                     <div class="text-end">
                         <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light me-2">Login</a>
                         <a asp-controller="Account" asp-action="SignIn" class="btn btn-primary">Sign In</a>

@@ -1,0 +1,30 @@
+﻿@model RenewInvoiceModel
+@{
+    ViewData["Title"] = "Renew Invoice";
+}
+
+<form asp-controller="Invoice" asp-action="RenewInvoice" method="post" class="row g-3">
+    <h1 class="h3 mb-3 fw-normal">Renew Invoice - @Model.Model</h1>
+    <input hidden asp-for="Plate" />
+    <input hidden asp-for="Model" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-6 form-floating">
+        <select class="form-select" asp-for="PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()">
+            <option value="" selected>Choose a type</option>
+        </select>
+        <label asp-for="PaymentType"></label>
+        <span asp-validation-for="PaymentType" class="text-danger"></span>
+    </div>
+    <div class="form-floating my-1 col-md-6">
+        <input type="number" readonly class="form-control-plaintext" asp-for="Value">
+        <label asp-for="Value"></label>
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+
+    <div class="container-md px-4 my-5">
+        <div class="row gx-md-3">
+            <button class="btn btn-lg btn-primary col mx-1" type="submit">Renew Invoice</button>
+            <a asp-action="ListInvoices" asp-controller="Invoice" class="btn btn-lg btn-secondary col mx-1">Cancel</a>
+        </div>
+    </div>
+</form>

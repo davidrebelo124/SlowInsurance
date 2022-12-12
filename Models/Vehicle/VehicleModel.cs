@@ -4,13 +4,24 @@ namespace SlowInsurance.Models.Vehicle
 {
     public class VehicleModel
     {
+        [Required]
         public int Id { get; set; }
-        public string? VehicleType { get; set; }
+        [Required]
+        [EnumDataType(typeof(VehicleType), ErrorMessage = "Not a valid type")]
+        [Display(Name = "Vehicle Type")]
+        public VehicleType? VehicleType { get; set; }
+        [Required]
+        [MaxLength(500)]
         public string? Model { get; set; }
-        [Display(Name = "Registration Dates")]
-        public string? RegistrationDate { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Registration Date")]
+        public DateTime RegistrationDate { get; set; }
+        [Required]
+        [RegularExpression(@"/^(([A-Z]{2}-\d{2}-(\d{2}|[A-Z]{2}))|(\d{2}-(\d{2}-[A-Z]{2}|[A-Z]{2}-\d{2})))$/", ErrorMessage = "Not a valid plate")]
         public string? Plate { get; set; }
+        [Required]
         [Display(Name = "Adhesion Date")]
-        public string? AdhesionDate { get; set; }
+        public DateTime AdhesionDate { get; set; }
     }
 }

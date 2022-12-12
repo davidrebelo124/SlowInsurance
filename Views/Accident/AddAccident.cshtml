@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model AddAccidentModel
 @{
+    ViewData["Title"] = "Add Accident";
 }
+
+<form asp-controller="Accident" asp-action="AddAccident" method="post" class="row g-3">
+    <h1 class="h3 mb-3 fw-normal">Add Accident</h1>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-floating my-1 col-md-6">
+        <input type="text" class="form-control" asp-for="Location">
+        <label asp-for="Location"></label>
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+    <div class="form-floating my-1 col-16">
+        <textarea class="form-control" asp-for="Description" style="height: 150px" placeholder="Historic"></textarea>
+        <label asp-for="Description"></label>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-floating my-1 col-md-6">
+        <input type="date" class="form-control" asp-for="Date" placeholder="Birthday">
+        <label asp-for="Date"></label>
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+    <div class="form-floating my-1 col-md-6">
+        <input type="text" class="form-control" asp-for="Vehicles">
+        <label>Vehicles - Seperate Plates by ','</label>
+        <span asp-validation-for="Vehicles" class="text-danger"></span>
+    </div>
+
+    <div class="container-md px-4 my-5">
+        <div class="row gx-md-3">
+            <button class="btn btn-lg btn-primary col mx-1" type="submit">Add Accident</button>
+            <a asp-action="ListAccidents" asp-controller="Accident" class="btn btn-lg btn-secondary col mx-1">Cancel</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,58 @@
+﻿@using System.Text.Json;
+@model List<InvoiceModel>
+@{
+    ViewData["Title"] = "All Invoices";
+}
+
+@if (!Model.Any())
+{
+    <div class="card">
+        <div class="card-header">
+            404
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">We could not find any invoices</h5>
+            <p class="card-text">We cannot seem to find any invoices due to the fact there are no vehicles associated to your name. If you wish to add an insurance, click the button bellow</p>
+            <a asp-controller="Vehicle" asp-action="AddVehicle" class="btn btn-primary">Add Vehicle</a>
+        </div>
+    </div>
+}
+else
+{
+    <table class="table">
+        @if (ViewBag.HasId)
+        {
+            var plate = JsonSerializer.Deserialize<VehicleModel>(Model.First().Vehicle).Plate;
+            <caption>Invoices of @plate</caption>
+        }
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Vehicle</th>
+                <th scope="col">Value</th>
+                <th scope="col">Issued Date</th>
+                <th scope="col">Expiration Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @foreach (var invoice in Model)
+            {
+                var vehicle = JsonSerializer.Deserialize<VehicleModel>(invoice.Vehicle);
+                <tr>
+                    <th scope="row">@vehicle.Model</th>
+                    <td>@invoice.Value</td>
+                    <td>@invoice.IssuedDate.Value.ToShortDateString()</td>
+                    <td>@invoice.ExpirationDate.Value.ToShortDateString()</td>
+                    @if (invoice.IsRenewalNeeded)
+                    {
+                        <td><a asp-action="RenewInvoice" asp-controller="Invoice" asp-route-id="@vehicle.Plate" class="btn btn-outline-dark">Renew</a></td>
+                    }
+                    else
+                    {
+                        <td>/ /</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
