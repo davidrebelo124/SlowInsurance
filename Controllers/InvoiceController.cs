@@ -91,7 +91,7 @@ namespace SlowInsurance.Controllers
                 Value = DEFAULT_VALUE,
             };
             var vModel = JsonSerializer.Deserialize<AddVehicleModel>(model.Vehicle);
-            if (vModel.RegistrationDate >= DateTime.Now.AddYears(-18))
+            if (vModel.RegistrationDate > DateTime.Now)
             {
                 ModelState.AddModelError("", "Not a valid date");
                 return View(model);
@@ -145,7 +145,7 @@ namespace SlowInsurance.Controllers
                 return NotFound();
 
             var invoice = vehicles.First().Invoices.OrderByDescending(i => i.ExpirationDate).First();
-            if (DateTime.Parse(invoice.ExpirationDate).AddMonths(-1) < DateTime.Now)
+            if (DateTime.Parse(invoice.ExpirationDate).AddMonths(-1) > DateTime.Now)
             {
                 ModelState.AddModelError("", "Does not need renewal");
                 return View(invoice);

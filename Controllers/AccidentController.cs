@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SlowInsurance.Entity;
 using SlowInsurance.Models.Accident;
 using SlowInsurance.Models.Vehicle;
@@ -6,6 +7,7 @@ using SlowInsurance.Repo;
 
 namespace SlowInsurance.Controllers
 {
+    [Authorize]
     public class AccidentController : Controller
     {
         private readonly InsuranceDbContext context;
@@ -47,6 +49,12 @@ namespace SlowInsurance.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
+
+            if (model.Date > DateTime.Now)
+            {
+                ModelState.AddModelError("", "Not a valid date");
+                return View(model);
+            }
 
             var vPlates = new List<string>();
             if (model.Vehicles.Contains(", "))
