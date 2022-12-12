@@ -19,7 +19,7 @@
 }*@
 
 <div class="container py-4">
-    <form asp-controller="Account" asp-action="AccountDetails" method="post" class="row g-3">
+    <form asp-controller="Account" asp-action="AccountDetails" method="post" class="row g-3" autocomplete="off">
         <h1 class="h3 mb-3 fw-normal fw-bold">User details</h1>
 
         <input hidden type="text" class="form-control" asp-for="Email" value="@Model.Email">
