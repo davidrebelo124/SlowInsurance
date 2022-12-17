@@ -108,7 +108,7 @@ namespace SlowInsurance.Controllers
             {
                 return BadRequest();
             }
-            if (vModel.RegistrationDate > DateTime.Now)
+            if (vModel.RegistrationDate > DateTime.Now && vModel.RegistrationDate < DateTime.Now.AddYears(-100))
             {
                 return BadRequest();
             }

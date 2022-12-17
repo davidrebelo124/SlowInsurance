@@ -50,9 +50,9 @@ namespace SlowInsurance.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.Date > DateTime.Now)
+            if (model.Date > DateTime.Now && model.Date < DateTime.Now.AddYears(-100))
             {
-                ModelState.AddModelError("", "Not a valid date");
+                ModelState.AddModelError(nameof(model.Date), "Not a valid date");
                 return View(model);
             }
 
@@ -69,7 +69,7 @@ namespace SlowInsurance.Controllers
                     vehicles.Add(context.Vehicle.Where(ve => ve.Plate == v).First());
                 else
                 {
-                    ModelState.AddModelError("", $"{v} is not a valid plate");
+                    ModelState.AddModelError(nameof(model.Vehicles), $"{v} is not a valid plate");
                     return View(model);
                 }
             }

@@ -37,9 +37,9 @@ namespace SlowInsurance.Controllers
         {
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
-            if (DateTime.Parse(model.Birthday) > DateTime.Now.AddYears(-18))
+            if (DateTime.Parse(model.Birthday) > DateTime.Now.AddYears(-18) && DateTime.Parse(model.Birthday) < DateTime.Now.AddYears(-118))
             {
-                ModelState.AddModelError("", "Not a valid date");
+                ModelState.AddModelError(nameof(model.Birthday), "Not a valid date");
                 return View(model);
             }
             if (ModelState.IsValid)
@@ -136,7 +136,7 @@ namespace SlowInsurance.Controllers
         [Authorize]
         public async Task<IActionResult> AccountDetails(AccountDetailsModel model)
         {
-            if (DateTime.Parse(model.Birthday) > DateTime.Now.AddYears(-18))
+            if (DateTime.Parse(model.Birthday) > DateTime.Now.AddYears(-18) && DateTime.Parse(model.Birthday) < DateTime.Now.AddYears(-118))
             {
                 ModelState.AddModelError("", "Not a valid date");
                 return View(model);
