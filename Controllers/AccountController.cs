@@ -25,7 +25,7 @@ namespace SlowInsurance.Controllers
         }
 
         [HttpGet]
-        public IActionResult SignIn()
+        public IActionResult SignUp()
         {
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
@@ -33,7 +33,7 @@ namespace SlowInsurance.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(RegisterModel model)
+        public async Task<IActionResult> SignUp(RegisterModel model)
         {
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
