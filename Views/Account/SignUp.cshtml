@@ -1,6 +1,6 @@
 ﻿@model RegisterModel
 @{
-    ViewData["Title"] = "Sign In";
+    ViewData["Title"] = "Sign Up";
 }
 <style>
     /* Chrome, Safari, Edge, Opera */
@@ -17,7 +17,7 @@
 </style>
 
 <form asp-controller="Account" asp-action="SignUp" method="post" class="row g-3" autocomplete="off">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-floating my-1 col-md-6">
         <input type="text" class="form-control" asp-for="Name" placeholder="Name">
@@ -83,6 +83,6 @@
         <i class="far fa-eye input-group-text my-1" style="cursor: pointer;height: 90%;" id="toggleConfirmPassword"></i>
     </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
     <a asp-action="Login" asp-controller="Account" class="align-self-sm-center align-content-sm-center align-items-sm-center justify-content-sm-center">Already have an account?</a>
 </form>
