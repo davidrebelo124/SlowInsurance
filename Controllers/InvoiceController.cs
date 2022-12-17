@@ -53,11 +53,12 @@ namespace SlowInsurance.Controllers
                                                 Id = v.Id
                                             })
                                             .First()),
-                ExpirationDate = i.ExpirationDate == string.Empty ? DateTime.MinValue : DateTime.ParseExact(i.ExpirationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
+                ExpirationDate = i.ExpirationDate == null ? DateTime.MinValue : DateTime.ParseExact(i.ExpirationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
                 IssuedDate = DateTime.ParseExact(i.IssuedDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
                 PaymentType = Enum.Parse<PaymentType>(i.PaymentType),
                 Value = i.Value,
-            }).OrderByDescending(i => i.ExpirationDate != DateTime.MinValue).ThenBy(i => i.ExpirationDate).ToList();
+            })
+            .OrderByDescending(i => i.ExpirationDate != DateTime.MinValue).ThenBy(i => i.ExpirationDate).ToList();
 
             return View(invoices);
         }

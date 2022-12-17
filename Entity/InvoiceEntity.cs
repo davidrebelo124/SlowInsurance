@@ -9,7 +9,6 @@ namespace SlowInsurance.Entity
         public string? PaymentType { get; set; }
         [Required]
         public double Value { get; set; }
-        [Required]
         public string? ExpirationDate { get; set; }
         [Required]
         public string? IssuedDate { get; set; }
