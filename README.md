@@ -1,2 +1,2 @@
 # SlowInsurance
-Insurance project for school modules avaliation
+Mockup Insurance website project for school
