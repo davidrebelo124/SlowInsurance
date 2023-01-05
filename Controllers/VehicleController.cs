@@ -52,7 +52,7 @@ namespace SlowInsurance.Controllers
             if (!ModelState.IsValid)
                 return View(modell);
 
-            if (modell.RegistrationDate > DateTime.Now && modell.RegistrationDate < DateTime.Now.AddYears(-100))
+            if (modell.RegistrationDate > DateTime.Now || modell.RegistrationDate < DateTime.Now.AddYears(-100))
             {
                 ModelState.AddModelError("", "Not a valid date");
                 return View(modell);
