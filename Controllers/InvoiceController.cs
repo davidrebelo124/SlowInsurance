@@ -14,7 +14,7 @@ namespace SlowInsurance.Controllers
     [Authorize]
     public class InvoiceController : Controller
     {
-        private const double DEFAULT_VALUE = 129.99;
+        private const double DEFAULT_VALUE = 18;
         private readonly InsuranceDbContext context;
 
         public InvoiceController(InsuranceDbContext context)
@@ -108,7 +108,7 @@ namespace SlowInsurance.Controllers
             {
                 return BadRequest();
             }
-            if (vModel.RegistrationDate > DateTime.Now && vModel.RegistrationDate < DateTime.Now.AddYears(-100))
+            if (vModel.RegistrationDate > DateTime.Now || vModel.RegistrationDate < DateTime.Now.AddYears(-100))
             {
                 return BadRequest();
             }

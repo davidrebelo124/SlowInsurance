@@ -15,13 +15,15 @@ namespace SlowInsurance.Controllers
         private readonly SignInManager<ClientEntity> signInManager;
         private readonly InsuranceDbContext context;
         private readonly IEmailSender emailSender;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public AccountController(UserManager<ClientEntity> userManager, SignInManager<ClientEntity> signInManager, InsuranceDbContext context, IEmailSender emailSender)
+        public AccountController(UserManager<ClientEntity> userManager, SignInManager<ClientEntity> signInManager, InsuranceDbContext context, IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
             this.emailSender = emailSender;
+            this.roleManager = roleManager;
         }
 
         [HttpGet]
@@ -37,7 +39,7 @@ namespace SlowInsurance.Controllers
         {
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
-            if (DateTime.Parse(model.Birthday) > DateTime.Now.AddYears(-18) && DateTime.Parse(model.Birthday) < DateTime.Now.AddYears(-118))
+            if (DateTime.Parse(model.Birthday) > DateTime.Now.AddYears(-18) || DateTime.Parse(model.Birthday) < DateTime.Now.AddYears(-118))
             {
                 ModelState.AddModelError(nameof(model.Birthday), "Not a valid date");
                 return View(model);
@@ -98,6 +100,12 @@ namespace SlowInsurance.Controllers
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var adminExists = await roleManager.FindByNameAsync("Admin");
+                if (adminExists is null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await userManager.AddToRoleAsync(userManager.FindByIdAsync("8da842fc-7aba-4cbb-9668-a7e56e92ad96").Result, "Admin");
+                }
 
                 if (result.Succeeded)
                 {
@@ -259,7 +267,7 @@ namespace SlowInsurance.Controllers
         public IActionResult DeleteAccount()
         {
             var user = context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).First();
-            if (user.Vehicles.Any())
+            if (user.Vehicles.Any() || User.IsInRole("Admin"))
             {
                 TempData["Action"] = "Could not delete account. Contact our staff for details.";
                 return RedirectToAction("AccountDetails");
@@ -286,6 +294,12 @@ namespace SlowInsurance.Controllers
             }
 
             return RedirectToAction("AccountDetails");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

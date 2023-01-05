@@ -7,7 +7,7 @@ using SlowInsurance.Repo;
 
 namespace SlowInsurance.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AccidentController : Controller
     {
         private readonly InsuranceDbContext context;
