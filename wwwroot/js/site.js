@@ -38,3 +38,9 @@ toggleCurrentPassword.addEventListener('click', function (e) {
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
 });
+
+// enable Tooltips
+document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach(tooltip => {
+        new bootstrap.Tooltip(tooltip)
+    })

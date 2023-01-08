@@ -84,27 +84,39 @@
         <div class="d-grid gap-2">
             <button class="btn btn-lg btn-primary" type="submit">Update Details</button>
             <a class="btn btn-lg btn-secondary" data-bs-toggle="modal" data-bs-target="#ChangePassword">Change Password</a>
-            <a class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteAccount">Delete Account</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <div data-bs-toggle="tooltip" data-bs-title="Admins cannot delete their accounts" placement="bottom" tabindex="0" class="btn btn-danger">
+                    <a class="btn btn-lg btn-danger disabled">Delete Account</a>
+                </div>
+            }
+            else
+            {
+                <a class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteAccount">Delete Account</a>
+            }
         </div>
     </form>
 </div>
 <partial name="_ChangePassword" model="null"/>
-<div class="modal fade" id="DeleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete your Account</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+@if (!User.IsInRole("Admin"))
+{
+    <div class="modal fade" id="DeleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete your Account</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form asp-action="DeleteAccount" asp-controller="Account" method="post">
+                    <div class="modal-body">
+                        Are you certain you want to delete your account. This action is irreversible!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete Account</button>
+                    </div>
+                </form>
             </div>
-            <form asp-action="DeleteAccount" asp-controller="Account" method="post">
-                <div class="modal-body">
-                    Are you certain you want to delete your account. This action is irreversible!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Delete Account</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
+}
