@@ -3,22 +3,27 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SlowInsurance.Entity;
 using SlowInsurance.Models.Account;
 using SlowInsurance.Repo;
+using System.Text;
+using System.Text.Json;
 
 namespace SlowInsurance.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IOptions<JsonOptions> options;
         private readonly UserManager<ClientEntity> userManager;
         private readonly SignInManager<ClientEntity> signInManager;
         private readonly InsuranceDbContext context;
         private readonly IEmailSender emailSender;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public AccountController(UserManager<ClientEntity> userManager, SignInManager<ClientEntity> signInManager, InsuranceDbContext context, IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
+        public AccountController(IOptions<JsonOptions> options, UserManager<ClientEntity> userManager, SignInManager<ClientEntity> signInManager, InsuranceDbContext context, IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
         {
+            this.options = options;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
@@ -30,7 +35,7 @@ namespace SlowInsurance.Controllers
         public IActionResult SignUp()
         {
             if (signInManager.IsSignedIn(User))
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "sHome");
             return View();
         }
 
@@ -300,6 +305,28 @@ namespace SlowInsurance.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult PrintDetails()
+        {
+            var user = context.Users.First(u => u.UserName == User.Identity.Name);
+            var model = new AccountDetailsModel
+            {
+                Email = user.UserName,
+                Name = user.Name,
+                Address = user.Address,
+                Birthday = user.Birthday,
+                DriverLicense = user.DriverLicense,
+                Historic = user.Historic,
+                IBAN = user.IBAN,
+                NIF = user.NIF,
+                PhoneNumber = user.PhoneNumber,
+            };
+
+            var json = JsonSerializer.Serialize(model, options.Value.JsonSerializerOptions);
+            var file = Encoding.Unicode.GetBytes(json);
+            return File(file, "application/json", $"{User.Identity.Name}_Details.json");
         }
     }
 }

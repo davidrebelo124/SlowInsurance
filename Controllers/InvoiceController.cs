@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SlowInsurance.Entity;
+using SlowInsurance.Models.File;
 using SlowInsurance.Models.Invoice;
 using SlowInsurance.Models.Vehicle;
 using SlowInsurance.Repo;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -16,10 +19,12 @@ namespace SlowInsurance.Controllers
     {
         private const double DEFAULT_VALUE = 18;
         private readonly InsuranceDbContext context;
+        private readonly IOptions<JsonOptions> options;
 
-        public InvoiceController(InsuranceDbContext context)
+        public InvoiceController(InsuranceDbContext context, IOptions<JsonOptions> options)
         {
             this.context = context;
+            this.options = options;
         }
 
         [HttpGet]
@@ -57,6 +62,7 @@ namespace SlowInsurance.Controllers
                 IssuedDate = DateTime.ParseExact(i.IssuedDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
                 PaymentType = Enum.Parse<PaymentType>(i.PaymentType),
                 Value = i.Value,
+                Id = i.Id,
             })
             .OrderByDescending(i => i.ExpirationDate != DateTime.MinValue).ThenBy(i => i.ExpirationDate).ToList();
 
@@ -112,11 +118,6 @@ namespace SlowInsurance.Controllers
             {
                 return BadRequest();
             }
-            //if (!Regex.IsMatch(vModel.Plate, @"^(([A-Z]{2}-\d{2}-(\d{2}|[A-Z]{2}))|(\d{2}-(\d{2}-[A-Z]{2}|[A-Z]{2}-\d{2})))$"))
-            //{
-            //    ModelState.AddModelError("", "Not a valid plate");
-            //    return View(model);
-            //}
             var vehicle = new VehicleEntity
             {
                 Model = vModel.Model,
@@ -193,6 +194,28 @@ namespace SlowInsurance.Controllers
             context.SaveChanges();
 
             return RedirectToAction("ListInvoices", "Invoice");
+        }
+
+        [HttpGet]
+        public IActionResult PrintInvoice(int id)
+        {
+            var vehicle = context.Users
+                .Where(u => u.UserName == User.Identity.Name)
+                .Include(u => u.Vehicles)
+                .ThenInclude(v => v.Invoices)
+                .First().Vehicles
+                .Where(v => v.Invoices.Any(i => i.Id == id))
+                .FirstOrDefault();
+            
+            if (vehicle == null)
+                return BadRequest();
+
+            var invoice = vehicle.Invoices.Where(i => i.Id == id);
+            var invoiceModel = invoice.Select(i => new FileInvoiceModel { Value = i.Value, ExpirationDate = i.ExpirationDate, IssuedDate = i.IssuedDate, PaymentType = i.PaymentType }).First();
+            
+            var json = JsonSerializer.Serialize(invoiceModel, options.Value.JsonSerializerOptions);
+            var file = Encoding.Unicode.GetBytes(json);
+            return File(file, "application/json", $"{User.Identity.Name}_{vehicle.Plate}_{id}.json");
         }
 
     }

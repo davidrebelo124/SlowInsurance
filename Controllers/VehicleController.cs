@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SlowInsurance.Entity;
 using SlowInsurance.Models;
+using SlowInsurance.Models.File;
 using SlowInsurance.Models.Vehicle;
 using SlowInsurance.Repo;
 using System.Text;
@@ -15,10 +17,12 @@ namespace SlowInsurance.Controllers
     public class VehicleController : Controller
     {
         private readonly InsuranceDbContext context;
+        private readonly IOptions<JsonOptions> options;
 
-        public VehicleController(InsuranceDbContext context)
+        public VehicleController(InsuranceDbContext context, IOptions<JsonOptions> options)
         {
             this.context = context;
+            this.options = options;
         }
 
         [HttpGet]
@@ -60,6 +64,70 @@ namespace SlowInsurance.Controllers
 
             TempData["Vehicle"] = Encoding.UTF8.GetString(JsonSerializer.SerializeToUtf8Bytes(modell));
             return RedirectToAction("AddInvoiceWithVehicle", "Invoice");
+        }
+
+        [HttpGet]
+        public IActionResult PrintAll()
+        {
+
+            var clientEntity = context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).ThenInclude(v => v.Invoices).First();
+            var vehicles = clientEntity.Vehicles.ToList();
+            var fileModel = new FileModel
+            {
+                User = new FileUserModel { Email = clientEntity.Email, Name = clientEntity.Name },
+                Vehicles = vehicles.Select(
+                    v => new FileVehicleModel
+                    {
+                        Model = v.Model,
+                        Plate = v.Plate,
+                        Invoices = v.Invoices.Select(
+                            i => new FileInvoiceModel
+                            {
+                                Value = i.Value,
+                                PaymentType = i.PaymentType,
+                                ExpirationDate = i.ExpirationDate,
+                                IssuedDate = i.IssuedDate
+                            }).ToList()
+                    }).ToList(),
+            };
+
+            var json = JsonSerializer.Serialize(fileModel, options.Value.JsonSerializerOptions);
+            var file = Encoding.Unicode.GetBytes(json);
+
+            return File(file, "application/json", $"{User.Identity.Name}_Vehicles&Invoices.json");
+        }
+
+        [HttpGet]
+        public IActionResult Print(string id)
+        {
+
+            var clientEntity = context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).ThenInclude(v => v.Invoices).First();
+            var v = clientEntity.Vehicles.Where(v => v.Plate == id).First();
+            var fileModel = new FileModel
+            {
+                User = new FileUserModel { Email = clientEntity.Email, Name = clientEntity.Name },
+                Vehicles = new List<FileVehicleModel>
+                {
+                    new FileVehicleModel
+                    {
+                        Model = v.Model,
+                        Plate = v.Plate,
+                        Invoices = v.Invoices.Select(
+                            i => new FileInvoiceModel
+                            {
+                                Value = i.Value,
+                                PaymentType = i.PaymentType,
+                                ExpirationDate = i.ExpirationDate,
+                                IssuedDate = i.IssuedDate
+                            }).ToList()
+                    },
+                }
+            };
+
+            var json = JsonSerializer.Serialize(fileModel, options.Value.JsonSerializerOptions);
+            var file = Encoding.Unicode.GetBytes(json);
+
+            return File(file, "application/json", $"{User.Identity.Name}_{id}_Invoices.json");
         }
     }
 }

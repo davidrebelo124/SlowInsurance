@@ -32,7 +32,7 @@
                     </ul>
 
                     <div class="dropdown text-end">
-                        <a class="d-block text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="d-block text-white text-decoration-none dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
                             @userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name
                         </a>
                         <ul class="dropdown-menu text-small">

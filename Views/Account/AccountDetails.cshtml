@@ -2,21 +2,6 @@
 @{
     ViewData["Title"] = "Account Details";
 }
-@*<script>
-    new bootstrap.Toast(document.getElementById('toast')).show;
-</script>
-
-@if (TempData["Action"] is not null)
-{
-    <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
-        <div class="d-flex">
-            <div class="toast-body">
-                @TempData["Action"]
-            </div>
-            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
-}*@
 
 <div class="container py-4">
     <form asp-controller="Account" asp-action="AccountDetails" method="post" class="row g-3" autocomplete="off">
@@ -70,20 +55,10 @@
             <label asp-for="Historic"></label>
             <span asp-validation-for="Historic" class="text-danger"></span>
         </div>
-        @*<br />
-        <div class="form-floating my-1 col-md-6">
-            <input type="password" class="form-control" asp-for="Password" placeholder="Password">
-            <label asp-for="Password"></label>
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-md-6">
-            <input type="password" class="form-control" asp-for="ConfirmPassword" placeholder="Confirm Password">
-            <label asp-for="ConfirmPassword"></label>
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>*@
         <div class="d-grid gap-2">
             <button class="btn btn-lg btn-primary" type="submit">Update Details</button>
             <a class="btn btn-lg btn-secondary" data-bs-toggle="modal" data-bs-target="#ChangePassword">Change Password</a>
+            <a class="btn btn-lg btn-dark" asp-action="PrintDetails" asp-controller="Account">Print Details</a>
             @if (User.IsInRole("Admin"))
             {
                 <div data-bs-toggle="tooltip" data-bs-title="Admins cannot delete their accounts" placement="bottom" tabindex="0" class="btn btn-danger">
