@@ -9,26 +9,21 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SlowInsurance.styles.css" asp-append-version="true" />
-    <style>
-        .divider {
-            height: 3rem;
-            border-width: 1px 0;
-        }
-    </style>
 </head>
 <body>
     <header class="p-3 text-bg-dark">
         <div class="container-fluid d-grid gap-3 align-items-center">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
-                <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <span class="fs-4">SlowInsurance</span>
+                <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                    <img src="~/images/icon.png" class="rounded-circle" width="40" height="40" role="img" aria-label="Logo" />
                 </a>
 
                 @if (signInManager.IsSignedIn(User))
                 {
                     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                         <li><a asp-controller="Vehicle" asp-action="ListVehicles" class="nav-link px-2 text-white">Vehicles</a></li>
-                        <li><a asp-controller="Invoice" asp-action="ListInvoices" asp-route-id="" class="nav-link px-2 text-white">Invoices</a></li>
+                        <li><a asp-controller="Invoice" asp-action="ListInvoices" asp-route-id="@null" class="nav-link px-2 text-white">Invoices</a></li>
+                        <li><a asp-controller="Accident" asp-action="ListAccidents" class="nav-link px-2 text-white">Accidents</a></li>
                     </ul>
 
                     <div class="dropdown text-end">

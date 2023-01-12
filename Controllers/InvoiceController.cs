@@ -211,11 +211,19 @@ namespace SlowInsurance.Controllers
                 return BadRequest();
 
             var invoice = vehicle.Invoices.Where(i => i.Id == id);
-            var invoiceModel = invoice.Select(i => new FileInvoiceModel { Value = i.Value, ExpirationDate = i.ExpirationDate, IssuedDate = i.IssuedDate, PaymentType = i.PaymentType }).First();
+            var invoiceModel = invoice.Select(i => new FileInvoiceModel
+            {
+                Value = i.Value,
+                ExpirationDate = i.ExpirationDate,
+                IssuedDate = i.IssuedDate,
+                PaymentType = i.PaymentType,
+                VehicleModel = vehicle.Model,
+                VehiclePlate = vehicle.Plate,
+            }).First();
             
             var json = JsonSerializer.Serialize(invoiceModel, options.Value.JsonSerializerOptions);
             var file = Encoding.Unicode.GetBytes(json);
-            return File(file, "application/json", $"{User.Identity.Name}_{vehicle.Plate}_{id}.json");
+            return File(file, "application/json", $"{User.Identity.Name}_{vehicle.Plate}_{invoiceModel.IssuedDate.Split('/')[2]}.json");
         }
 
     }

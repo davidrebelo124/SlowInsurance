@@ -9,14 +9,18 @@
                 404
             </div>
             <div class="card-body">
-                <h5 class="card-title">There were no accidents registered</h5>
-                <p class="card-text">We cannot seem to find any accidents. Good record.</p>
+                <h5 class="card-title">There were no accidents</h5>
+                <p class="card-text">We cannot seem to find any accidents. If any occured, click the button bellow</p>
+                <a asp-controller="Admin" asp-action="AddAccident" class="btn btn-primary">Add Accident</a>
             </div>
         </div>
 }
 else
 {
         <div class="row">
+            <div class="d-grid gap-2">
+                <a asp-action="AddAccident" asp-controller="Admin" class="btn btn-outline-primary btn-lg" style="margin: -10px 0px 20px 0px">Add Accident</a>
+            </div>
         @foreach (var accident in Model)
         {
                     <div class="col-sm-4">

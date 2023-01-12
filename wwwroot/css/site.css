@@ -20,3 +20,8 @@ body {
 .cursor-pointer {
     cursor: pointer;
 }
+
+.divider {
+    height: 3rem;
+    border-width: 1px 0;
+}

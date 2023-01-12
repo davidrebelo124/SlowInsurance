@@ -3,7 +3,7 @@
     ViewData["Title"] = "Add Accident";
 }
 
-<form asp-controller="Accident" asp-action="AddAccident" method="post" class="row g-3" autocomplete="off">
+<form asp-controller="Admin" asp-action="AddAccident" method="post" class="row g-3" autocomplete="off">
     <h1 class="h3 mb-3 fw-normal">Add Accident</h1>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-floating my-1 col-md-16">
@@ -30,7 +30,7 @@
     <div class="container-md px-4 my-5">
         <div class="row gx-md-3">
             <button class="btn btn-lg btn-primary col mx-1" type="submit">Add Accident</button>
-            <a asp-action="ListAccidents" asp-controller="Accident" class="btn btn-lg btn-secondary col mx-1">Cancel</a>
+            <a asp-action="ListAccidents" asp-controller="Admin" class="btn btn-lg btn-secondary col mx-1">Cancel</a>
         </div>
     </div>
 </form>
