@@ -3,13 +3,14 @@
 Mockup Insurance website project for school
 
 
-# List Of Things
+## List Of Things
 ### To Add
-Find plate api
+Find plate api	
+
 Separate all accidents from per client accidents
 
 ### Problems I encontered
 *Jsonoptions and encoding*
 
 ### Notes
-Started using OpenAI bots to help in solving problems (For now, it's going well)
+Started using OpenAI to help in solving problems (For now, it's going well)
