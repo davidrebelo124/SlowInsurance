@@ -5,12 +5,12 @@ Mockup Insurance website project for school
 
 ## List Of Things
 ### To Add
-Find plate api	
-
-Separate all accidents from per client accidents
+Find plate api
 
 ### Problems I encontered
 *Jsonoptions and encoding*
 
 ### Notes
-Started using OpenAI to help in solving problems (For now, it's going well)
+Started using OpenAI playground to help in solving problems
+
+Using Azure Data Studio to access the Database

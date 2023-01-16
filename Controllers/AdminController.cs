@@ -40,23 +40,23 @@ namespace SlowInsurance.Controllers
             return View(users);
         }
 
-        [HttpGet]
-        public IActionResult ListUsers(string email)
-        {
-            var client = userManager.FindByEmailAsync(email).Result;
-            var user = new ListUserModel
-            {
-                Id = client.Id,
-                Name = client.Name,
-                Email = client.Email,
-                IsAdmin = userManager.IsInRoleAsync(client, "Admin").Result,
-            };
-            var userModel = new List<ListUserModel>
-            {
-                user
-            };
-            return View(userModel);
-        }
+        //[HttpGet]
+        //public IActionResult ListUsers(string id)
+        //{
+        //    var client = userManager.FindByEmailAsync(id).Result;
+        //    var user = new ListUserModel
+        //    {
+        //        Id = client.Id,
+        //        Name = client.Name,
+        //        Email = client.Email,
+        //        IsAdmin = userManager.IsInRoleAsync(client, "Admin").Result,
+        //    };
+        //    var userModel = new List<ListUserModel>
+        //    {
+        //        user
+        //    };
+        //    return View(userModel);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> GiveAdminRoleAsync(string userId)

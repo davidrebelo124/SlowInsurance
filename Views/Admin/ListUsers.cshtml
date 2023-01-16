@@ -3,3 +3,22 @@
     ViewData["Title"] = "Users";
 }
 
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    @foreach (var user in Model)
+    {
+        <tbody>
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>. . .</td>
+            </tr>
+        </tbody>
+    }
+</table>

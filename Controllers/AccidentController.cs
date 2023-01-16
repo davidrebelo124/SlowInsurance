@@ -21,8 +21,13 @@ namespace SlowInsurance.Controllers
         [HttpGet]
         public IActionResult ListAccidents()
         {
-            var vehicles = context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).First().Vehicles;
-            var accidents = context.Accident.Where(a => vehicles.Intersect(a.Vehicles).Any()).Select(a => new AccidentModel
+            var vehicles = context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).First().Vehicles.ToList();
+
+            var accidents = context.Accident
+            .Include(a => a.Vehicles)
+            .AsEnumerable()
+            .Where(a => vehicles.Intersect(a.Vehicles).Any())
+            .Select(a => new AccidentModel
             {
                 Location = a.Location,
                 Description = a.Description,

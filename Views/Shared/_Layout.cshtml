@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewData["Title"] - SlowInsurance</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -15,7 +15,7 @@
         <div class="container-fluid d-grid gap-3 align-items-center">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
                 <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                    <img src="~/images/icon.png" class="rounded-circle" width="40" height="40" role="img" aria-label="Logo" />
+                    <img src="~/images/iconWhite.png" width="40" height="40" role="img" aria-label="Logo" />
                 </a>
 
                 @if (signInManager.IsSignedIn(User))
@@ -54,6 +54,7 @@
             </div>
         </div>
     </header>
+
     <div class="divider"></div>
     <div class="container">
         <main role="main" class="pb-3">
@@ -61,11 +62,12 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - SlowInsurance
-        </div>
-    </footer>
+    <div class="footer bg-dark">
+		<div class="container">
+			<p class="text-light">Copyright &copy; 2022 Vehicle Insurance | All Rights Reserved</p>
+		</div>
+	</div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
