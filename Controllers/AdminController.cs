@@ -27,41 +27,24 @@ namespace SlowInsurance.Controllers
         [HttpGet]
         public IActionResult ListUsers()
         {
-            var users = userManager.GetUsersInRoleAsync("Admin").Result
+            var users = context.Users
+                .AsEnumerable()
                 .Select(
                     u => new ListUserModel
                     {
                         Id = u.Id,
                         Name = u.Name,
                         Email= u.Email,
-                        IsAdmin = true,
+                        IsAdmin = userManager.IsInRoleAsync(u, "Admin").Result,
                     }
                 ).ToList();
             return View(users);
         }
 
-        //[HttpGet]
-        //public IActionResult ListUsers(string id)
-        //{
-        //    var client = userManager.FindByEmailAsync(id).Result;
-        //    var user = new ListUserModel
-        //    {
-        //        Id = client.Id,
-        //        Name = client.Name,
-        //        Email = client.Email,
-        //        IsAdmin = userManager.IsInRoleAsync(client, "Admin").Result,
-        //    };
-        //    var userModel = new List<ListUserModel>
-        //    {
-        //        user
-        //    };
-        //    return View(userModel);
-        //}
-
         [HttpPost]
-        public async Task<IActionResult> GiveAdminRoleAsync(string userId)
+        public async Task<IActionResult> GiveAdminRoleAsync(string id)
         {
-            var user = await userManager.FindByIdAsync(userId);
+            var user = await userManager.FindByIdAsync(id);
             if (await userManager.IsInRoleAsync(user, "Admin"))
                 return RedirectToAction("ListUser");
 
@@ -70,9 +53,9 @@ namespace SlowInsurance.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveAdminRoleAsync(string userId)
+        public async Task<IActionResult> RemoveAdminRoleAsync(string id)
         {
-            var user = await userManager.FindByIdAsync(userId);
+            var user = await userManager.FindByIdAsync(id);
             if (!await userManager.IsInRoleAsync(user, "Admin"))
                 return RedirectToAction("ListUser");
 
@@ -81,9 +64,9 @@ namespace SlowInsurance.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteAccount(string userId)
+        public async Task<IActionResult> DeleteAccount(string id)
         {
-            await userManager.DeleteAsync(await userManager.FindByIdAsync(userId));
+            await userManager.DeleteAsync(await userManager.FindByIdAsync(id));
             return RedirectToAction("ListUsers");
         }
 

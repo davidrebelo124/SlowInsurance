@@ -11,14 +11,23 @@
             <th scope="col">Actions</th>
         </tr>
     </thead>
-    @foreach (var user in Model)
-    {
-        <tbody>
+    <tbody>
+        @foreach (var user in Model)
+        {
             <tr>
                 <td>@user.Name</td>
                 <td>@user.Email</td>
-                <td>. . .</td>
+                <td>
+                    @if (user.IsAdmin)
+                    {
+                        <a class="btn btn-danger" asp-action="RemoveAdminRoleAsync" asp-route-id="@user.Id">Remove Admin Role</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-success" asp-action="GiveAdminRoleAsync" asp-route-id="@user.Id">Give Admin Role</a>
+                    }
+                </td>
             </tr>
-        </tbody>
-    }
+        }
+    </tbody>
 </table>

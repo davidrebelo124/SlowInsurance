@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="~/SlowInsurance.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="p-3 text-body-emphasis">
-        <div class="container-fluid d-grid gap-3 align-items-center">
+    <header class="p-3 text-bg-dark text-white">
+        <div class="container-fluid d-grid gap-3 align-items-center text-white">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
                 <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
                     <img src="~/images/iconWhite.png" width="40" height="40" role="img" aria-label="Logo" />
@@ -38,7 +38,7 @@
 
                     @if (signInManager.IsSignedIn(User))
                     {
-                        <div class="dropdown text-end">
+                        <div class="dropdown">
                             <a class="d-block text-decoration-none dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
                                 @userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name
                             </a>
@@ -71,7 +71,7 @@
     </div>
 
     <div class="footer">
-		<div class="container">
+		<div class="container text-dark">
 			<p class="text-light">Copyright &copy; 2022 Vehicle Insurance | All Rights Reserved</p>
 		</div>
 	</div>

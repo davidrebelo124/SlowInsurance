@@ -7,6 +7,8 @@ Mockup Insurance website project for school
 ### To Add
 Find plate api
 
+Divide between controller and db querries
+
 ### Problems I encontered
 *Jsonoptions and encoding*
 
