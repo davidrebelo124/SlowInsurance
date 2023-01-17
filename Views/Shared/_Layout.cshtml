@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/SlowInsurance.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="p-3 text-bg-dark">
+    <header class="p-3 bg-body text-body-emphasis">
         <div class="container-fluid d-grid gap-3 align-items-center">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
                 <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
@@ -21,36 +21,78 @@
                 @if (signInManager.IsSignedIn(User))
                 {
                     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                        <li><a asp-controller="Vehicle" asp-action="ListVehicles" class="nav-link px-2 text-white">Vehicles</a></li>
-                        <li><a asp-controller="Invoice" asp-action="ListInvoices" asp-route-id="@null" class="nav-link px-2 text-white">Invoices</a></li>
-                        <li><a asp-controller="Accident" asp-action="ListAccidents" class="nav-link px-2 text-white">Accidents</a></li>
+                        <li><a asp-controller="Vehicle" asp-action="ListVehicles" class="nav-link px-2">Vehicles</a></li>
+                        <li><a asp-controller="Invoice" asp-action="ListInvoices" asp-route-id="@null" class="nav-link px-2">Invoices</a></li>
+                        <li><a asp-controller="Accident" asp-action="ListAccidents" class="nav-link px-2">Accidents</a></li>
                     </ul>
-
-                    <div class="dropdown text-end">
-                        <a class="d-block text-white text-decoration-none dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
-                            @userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name
-                        </a>
-                        <ul class="dropdown-menu text-small">
-                            <li><a class="dropdown-item" asp-action="AccountDetails" asp-controller="Account">Profile</a></li>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li><a class="dropdown-item" asp-action="MainPage" asp-controller="Admin">Admin Page</a></li>
-                            }
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Sign out</a></li>
-                        </ul>
-                    </div>
                 }
                 else
                 {
                     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                         <li><span></span></li>
                     </ul>
-                    <div class="text-end">
+                }
+
+
+                <div class="text-end">
+                    <div class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                        <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                        <hr class="d-lg-none my-2 text-white-50">
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center show" id="bd-theme" type="button" aria-expanded="true" data-bs-toggle="dropdown" data-bs-display="static">
+                            <svg class="bi my-1 theme-icon-active"><use href="#moon-stars-fill"></use></svg>
+                            <span class="d-lg-none ms-2">Toggle theme</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end show" aria-labelledby="bd-theme" style="--bs-dropdown-min-width: 8rem;" data-bs-popper="static">
+                            <li>
+                                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
+                                    <svg class="bi me-2 opacity-50 theme-icon"><use href="#sun-fill"></use></svg>
+                                    Light
+                                    <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark">
+                                    <svg class="bi me-2 opacity-50 theme-icon"><use href="#moon-stars-fill"></use></svg>
+                                    Dark
+                                    <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">
+                                    <svg class="bi me-2 opacity-50 theme-icon"><use href="#circle-half"></use></svg>
+                                    Auto
+                                    <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <div class="dropdown text-end">
+                            <a class="d-block text-decoration-none dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                                @userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name
+                            </a>
+                            <ul class="dropdown-menu text-small">
+                                <li><a class="dropdown-item" asp-action="AccountDetails" asp-controller="Account">Profile</a></li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><a class="dropdown-item" asp-action="MainPage" asp-controller="Admin">Admin Page</a></li>
+                                }
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Sign out</a></li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
                         <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light me-2">Login</a>
                         <a asp-controller="Account" asp-action="SignUp" class="btn btn-primary">Sign Up</a>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
     </header>
@@ -62,7 +104,7 @@
         </main>
     </div>
 
-    <div class="footer bg-dark">
+    <div class="footer">
 		<div class="container">
 			<p class="text-light">Copyright &copy; 2022 Vehicle Insurance | All Rights Reserved</p>
 		</div>

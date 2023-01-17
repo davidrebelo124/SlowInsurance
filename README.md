@@ -13,4 +13,4 @@ Find plate api
 ### Notes
 Started using OpenAI playground to help in solving problems
 
-Using Azure Data Studio to access the Database
+Using Azure Data Studio to access the Database Data outside of the website
