@@ -36,37 +36,43 @@ namespace SlowInsurance.Controllers
                         Name = u.Name,
                         Email= u.Email,
                         IsAdmin = userManager.IsInRoleAsync(u, "Admin").Result,
-                    }
-                ).ToList();
+                    })
+                .OrderBy(u => !u.IsAdmin)
+                .ThenBy(u => u.Id != "8da842fc-7aba-4cbb-9668-a7e56e92ad96")
+                .ThenBy(u => u.Name)
+                .ToList();
             return View(users);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GiveAdminRoleAsync(string id)
         {
             var user = await userManager.FindByIdAsync(id);
             if (await userManager.IsInRoleAsync(user, "Admin"))
-                return RedirectToAction("ListUser");
+                return BadRequest();
 
             await userManager.AddToRoleAsync(user, "Admin");
             return RedirectToAction("ListUsers");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> RemoveAdminRoleAsync(string id)
         {
             var user = await userManager.FindByIdAsync(id);
+            if (user.Id == "8da842fc-7aba-4cbb-9668-a7e56e92ad96")
+                return RedirectToAction("ListUsers");
             if (!await userManager.IsInRoleAsync(user, "Admin"))
-                return RedirectToAction("ListUser");
+                return BadRequest();
 
             await userManager.RemoveFromRoleAsync(user, "Admin");
             return RedirectToAction("ListUsers");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> DeleteAccount(string id)
         {
-            await userManager.DeleteAsync(await userManager.FindByIdAsync(id));
+            var user = await userManager.FindByIdAsync(id);
+            await userManager.DeleteAsync(user);
             return RedirectToAction("ListUsers");
         }
 

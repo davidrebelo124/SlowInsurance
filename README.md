@@ -11,6 +11,7 @@ Divide between controller and db querries
 
 ### Problems I encontered
 *Jsonoptions and encoding*
+*UI/UX expirience*
 
 ### Notes
 Started using OpenAI playground to help in solving problems

@@ -105,12 +105,14 @@ namespace SlowInsurance.Controllers
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                var adminExists = await roleManager.FindByNameAsync("Admin");
-                if (adminExists is null)
-                {
-                    await roleManager.CreateAsync(new IdentityRole("Admin"));
-                    await userManager.AddToRoleAsync(userManager.FindByIdAsync("8da842fc-7aba-4cbb-9668-a7e56e92ad96").Result, "Admin");
-                }
+
+                //// Create Admin Role
+                //var adminExists = await roleManager.FindByNameAsync("Admin");
+                //if (adminExists is null)
+                //{
+                //    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                //    await userManager.AddToRoleAsync(userManager.FindByIdAsync("8da842fc-7aba-4cbb-9668-a7e56e92ad96").Result, "Admin");
+                //}
 
                 if (result.Succeeded)
                 {

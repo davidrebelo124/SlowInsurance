@@ -19,7 +19,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-hover">
         @if (ViewBag.HasId)
         {
             var plate = JsonSerializer.Deserialize<VehicleModel>(Model.First().Vehicle).Plate;
@@ -55,7 +55,7 @@ else
                     {
                         <a asp-action="RenewInvoice" asp-controller="Invoice" asp-route-id="@vehicle.Plate" class="btn btn-sm btn-outline-dark">Renew</a>
                     }
-                    <a asp-action="PrintInvoice" asp-controller="Invoice" asp-route-id="@invoice.Id" class="btn btn-sm btn-outline-dark">Print</a>
+                    <a asp-action="PrintInvoice" asp-controller="Invoice" asp-route-id="@invoice.Id" class="btn btn-sm btn-outline-info">Print</a>
                     </td>
                 </tr>
             }

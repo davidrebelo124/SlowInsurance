@@ -20,7 +20,7 @@ else
     <div class="row">
         <div class="d-grid gap-2">
             <a asp-action="AddVehicle" asp-controller="Vehicle" class="btn btn-outline-primary btn-lg" style="margin: -10px 0px 20px 0px">Add Vehicle</a>
-            <a asp-action="PrintAll" asp-controller="Vehicle" class="btn btn-outline-dark btn-lg" style="margin: -10px 0px 20px 0px">Print All</a>
+            <a asp-action="PrintAll" asp-controller="Vehicle" class="btn btn-outline-info btn-lg" style="margin: -10px 0px 20px 0px">Print All</a>
         </div>
         @foreach(var vehicle in Model){
             <div class="col-sm-4">
@@ -30,7 +30,7 @@ else
                         <p class="card-text">Registration Date: @vehicle.RegistrationDate.ToString("dd/MM/yyyy")</p>
                         <p class="card-text">Adhesion Date: @vehicle.AdhesionDate.ToString("dd/MM/yyyy")</p>
                         <a asp-action="ListInvoices" asp-controller="Invoice" asp-route-id="@vehicle.Plate" class="btn btn-primary">See Invoices</a>
-                        <a asp-action="Print" asp-controller="Vehicle" asp-route-id="@vehicle.Plate" class="btn btn-outline-dark">Print Invoices</a>
+                        <a asp-action="Print" asp-controller="Vehicle" asp-route-id="@vehicle.Plate" class="btn btn-outline-info">Print Invoices</a>
                     </div>
                 </div>
             </div>

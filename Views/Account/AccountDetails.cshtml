@@ -58,7 +58,7 @@
         <div class="d-grid gap-2">
             <button class="btn btn-lg btn-primary" type="submit">Update Details</button>
             <a class="btn btn-lg btn-secondary" data-bs-toggle="modal" data-bs-target="#ChangePassword">Change Password</a>
-            <a class="btn btn-lg btn-dark" asp-action="PrintDetails" asp-controller="Account">Print Details</a>
+            <a class="btn btn-lg btn-outline-info" asp-action="PrintDetails" asp-controller="Account">Print Details</a>
             @if (User.IsInRole("Admin"))
             {
                 <div data-bs-toggle="tooltip" data-bs-title="Admins cannot delete their accounts" placement="bottom" tabindex="0" class="btn btn-danger">

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Users";
 }
 
-<table class="table table-dark">
+<table class="table table-dark table-hover">
     <thead>
         <tr>
             <th scope="col">Name</th>
@@ -18,13 +18,20 @@
                 <td>@user.Name</td>
                 <td>@user.Email</td>
                 <td>
-                    @if (user.IsAdmin)
+                    @if (user.Email != User.Identity.Name && user.Id != "8da842fc-7aba-4cbb-9668-a7e56e92ad96")
                     {
-                        <a class="btn btn-danger" asp-action="RemoveAdminRoleAsync" asp-route-id="@user.Id">Remove Admin Role</a>
+                        @if (user.IsAdmin)
+                        {
+                            <a class="btn btn-danger text-nowrap" asp-action="RemoveAdminRole" asp-route-id="@user.Id">Remove Admin Role</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success text-nowrap" asp-action="GiveAdminRole" asp-route-id="@user.Id">Give Admin Role</a>
+                        }
                     }
                     else
                     {
-                        <a class="btn btn-success" asp-action="GiveAdminRoleAsync" asp-route-id="@user.Id">Give Admin Role</a>
+                        <a class="btn btn-outline-primary disabled text-nowrap">No actions to take</a>
                     }
                 </td>
             </tr>
