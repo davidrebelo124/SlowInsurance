@@ -1,3 +1,8 @@
+.divider {
+    height: 3rem;
+    border-width: 1px 0;
+}
+
 /**
 * Template Name: Maxim - v4.10.0
 * Template URL: https://bootstrapmade.com/maxim-free-onepage-bootstrap-theme/
@@ -371,7 +376,7 @@ h6 {
 #hero {
     width: 100%;
     height: calc(100vh - 70px);
-    background: url("../images/hero-bg.jpg") center center;
+    background: url("../img/hero-bg.jpg") center center;
     background-size: cover;
     position: relative;
     margin-top: 70px;

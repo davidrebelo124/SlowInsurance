@@ -2,44 +2,24 @@
 	ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-	<div class="row">
-		<div class="col-sm-12 col-md-6">
-			<div class="card bg-dark text-light">
-				<div class="card-body">
-					<h5 class="card-title">We Offer The Best Insurance</h5>
-					<p class="card-text">We provide the best insurance for all your vehicles. We have a wide range of plans and packages to suit your needs.</p>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-12 col-md-6">
-			<div class="card bg-dark text-light">
-				<div class="card-body">
-					<h5 class="card-title">We Are Affordable</h5>
-					<p class="card-text">Our prices are competitive and our policies are designed to be affordable and flexible.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+<section class="breadcrumbs">
+    <div class="container">
 
-<div class="container">
-	<div class="row">
-		<div class="col-sm-12 col-md-6">
-			<div class="card bg-dark text-light">
-				<div class="card-body">
-					<h5 class="card-title">We Have 24/7 Support</h5>
-					<p class="card-text">We provide 24/7 customer service and support to answer any questions you may have about your policy.</p>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-12 col-md-6">
-			<div class="card bg-dark text-light">
-				<div class="card-body">
-					<h5 class="card-title">We Have Experienced Agents</h5>
-					<p class="card-text">Our experienced agents are available to help you find the policy that is best for you and your vehicle.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Inner Page</h2>
+            <ol>
+                <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+                <li>Inner Page</li>
+            </ol>
+        </div>
+
+    </div>
+</section>
+
+<section class="inner-page">
+    <div class="container">
+        <p>
+            Example inner page template
+        </p>
+    </div>
+</section>

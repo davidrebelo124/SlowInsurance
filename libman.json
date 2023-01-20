@@ -3,10 +3,6 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "aos@2.3.4",
-      "destination": "wwwroot/lib/aos/"
-    },
-    {
       "library": "bootstrap@5.2.3",
       "destination": "wwwroot/lib/bootstrap/"
     },
@@ -17,14 +13,6 @@
     {
       "library": "boxicons@2.1.4",
       "destination": "wwwroot/lib/boxicons/"
-    },
-    {
-      "library": "glightbox@3.2.0",
-      "destination": "wwwroot/lib/glightbox/"
-    },
-    {
-      "library": "jquery.isotope@3.0.6",
-      "destination": "wwwroot/lib/isotope-layout/"
     },
     {
       "library": "jquery@3.6.3",
@@ -39,8 +27,21 @@
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
     },
     {
-      "library": "Swiper@8.4.6",
-      "destination": "wwwroot/lib/swiper/"
+      "provider": "cdnjs",
+      "library": "aos@2.3.4",
+      "destination": "wwwroot/lib/aos/"
     }
-  ]
+  ,
+{
+  "provider": "cdnjs",
+  "library": "glightbox@3.2.0",
+  "destination": "wwwroot/lib/glightbox/"
+}
+,
+{
+  "provider": "cdnjs",
+  "library": "Swiper@8.4.6",
+  "destination": "wwwroot/lib/Swiper/"
+}
+]
 }
