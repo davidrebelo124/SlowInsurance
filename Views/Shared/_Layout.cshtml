@@ -20,101 +20,50 @@
     <link rel="stylesheet" href="~/SlowInsurance.styles.css" asp-append-version="true" />
 </head>
 <body>
-    @*<header class="p-3 text-bg-dark">
-        <div class="container-fluid d-grid gap-3 align-items-center text-white">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
-                <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                    <img src="~/images/iconWhite.png" width="40" height="40" role="img" aria-label="Logo" />
-                </a>
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between">
+            <div class="logo">
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <a asp-controller="Home" asp-action="Index"><img src="~/images/iconWhite.png" alt="Slow Insurance Logo" class="img-fluid"></a>
+            </div>
 
+            <nav id="navbar" class="navbar">
+                <ul>
                 @if (signInManager.IsSignedIn(User))
                 {
-                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                        <li><a asp-controller="Vehicle" asp-action="ListVehicles" class="nav-link px-2">Vehicles</a></li>
-                        <li><a asp-controller="Invoice" asp-action="ListInvoices" asp-route-id="@null" class="nav-link px-2">Invoices</a></li>
-                        <li><a asp-controller="Accident" asp-action="ListAccidents" class="nav-link px-2">Accidents</a></li>
-                    </ul>
+                    <li><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a class="nav-link" asp-controller="Vehicle" asp-action="ListVehicles">Vehicles</a></li>
+                    <li><a class="nav-link" asp-controller="Invoice" asp-action="ListInvoices">Invoices</a></li>
+                    <li><a class="nav-link" asp-controller="Accident" asp-action="ListAccidents">Accidents</a></li>
+                    <li class="dropdown"><a><span>@userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a asp-action="AccountDetails" asp-controller="Account">Profile</a></li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                            <li><a asp-action="MainPage" asp-controller="Admin">Admin Page</a></li>
+                            }
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Sign out</a></li>
+                        </ul>
+                    </li>
                 }
                 else
                 {
-                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                        <li><span></span></li>
-                    </ul>
+                    <li><a class="nav-link" asp-controller="Account" asp-action="Login">Login</a></li>
                 }
-
-
-                <div class="text-end">
-
-                    @if (signInManager.IsSignedIn(User))
-                    {
-                        <div class="dropdown">
-                            <a class="d-block text-decoration-none dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
-                                @userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name
-                            </a>
-                            <ul class="dropdown-menu text-small">
-                                <li><a class="dropdown-item" asp-action="AccountDetails" asp-controller="Account">Profile</a></li>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <li><a class="dropdown-item" asp-action="MainPage" asp-controller="Admin">Admin Page</a></li>
-                                }
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Sign out</a></li>
-                            </ul>
-                        </div>
-                    }
-                    else
-                    {
-                        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light me-2">Login</a>
-                        <a asp-controller="Account" asp-action="SignUp" class="btn btn-primary">Sign Up</a>
-                    }
-                </div>
-            </div>
-        </div>
-    </header>*@
-
-    <header id="header" class="fixed-top d-flex align-items-center">
-    <div class="container d-flex justify-content-between">
-        <div class="logo">
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <a asp-controller="Home" asp-action="Index"><img src="~/images/iconWhite.png" alt="Slow Insurance Logo" class="img-fluid"></a>
-    </div>
-
-    <nav id="navbar" class="navbar">
-        <ul>
-        @if (signInManager.IsSignedIn(User))
-        {
-            <li><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-            <li><a class="nav-link" asp-controller="Vehicle" asp-action="ListVehicles">Vehicles</a></li>
-            <li><a class="nav-link" asp-controller="Invoice" asp-action="ListInvoices">Invoices</a></li>
-            <li><a class="nav-link" asp-controller="Accident" asp-action="ListAccidents">Accidents</a></li>
-            <li class="dropdown"><a><span>@userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name</span> <i class="bi bi-chevron-down"></i></a>
-                <ul>
-                    <li><a asp-action="AccountDetails" asp-controller="Account">Profile</a></li>
-                    @if (User.IsInRole("Admin"))
-                    {
-                    <li><a asp-action="MainPage" asp-controller="Admin">Admin Page</a></li>
-                    }
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Sign out</a></li>
                 </ul>
-            </li>
-        }
-        else
-        {
-            <li><a class="nav-link" asp-controller="Account" asp-action="Login">Login</a></li>
-        }
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
 
-    </div>
-  </header><!-- End Header -->
+        </div>
+    </header><!-- End Header -->
+
     <div class="divider"></div>
     <main role="main">
         @RenderBody()
     </main>
 
-    @*======= Footer ======= *@
+    @*======= Footer =======*@
     <footer id="footer">
         <div class="footer-top">
             <div class="container">
