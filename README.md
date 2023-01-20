@@ -9,9 +9,15 @@ Find plate api
 
 Divide between controller and db querries
 
+Add "See Vehicles" in Admin List Users
+
+Add Search Queries in needed Lists
+
+UI adjustments
+
 ### Problems I encontered
 *Jsonoptions and encoding*
-*UI/UX expirience*
+*UI/UX development*
 
 ### Notes
 Started using OpenAI playground to help in solving problems
