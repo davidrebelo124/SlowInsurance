@@ -17,6 +17,7 @@ UI adjustments
 
 ### Problems I encontered
 *Jsonoptions and encoding*
+
 *UI/UX development*
 
 ### Notes

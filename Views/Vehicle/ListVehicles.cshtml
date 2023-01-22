@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Vehicles";
 }
+<div class="divider"></div>
 @if (Model.Count() is 0)
 {
     <div class="card">
@@ -19,8 +20,8 @@ else
 {
     <div class="row">
         <div class="d-grid gap-2">
-            <a asp-action="AddVehicle" asp-controller="Vehicle" class="btn btn-outline-primary btn-lg" style="margin: -10px 0px 20px 0px">Add Vehicle</a>
-            <a asp-action="PrintAll" asp-controller="Vehicle" class="btn btn-outline-info btn-lg" style="margin: -10px 0px 20px 0px">Print All</a>
+            <a asp-action="AddVehicle" asp-controller="Vehicle" class="btn btn-outline-primary btn-lg">Add Vehicle</a>
+            <a asp-action="PrintAll" asp-controller="Vehicle" class="btn btn-outline-info btn-lg">Print All</a>
         </div>
         @foreach(var vehicle in Model){
             <div class="col-sm-4">

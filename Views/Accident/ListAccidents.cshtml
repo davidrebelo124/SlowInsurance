@@ -2,8 +2,11 @@
 @{
     ViewData["Title"] = "List Accident";
 }
+
+<div class="divider"></div>
 @if (!Model.Any())
 {
+    <section>
         <div class="card">
             <div class="card-header">
                 404
@@ -13,28 +16,31 @@
                 <p class="card-text">We cannot seem to find any accidents. Good record.</p>
             </div>
         </div>
+    </section>
 }
 else
 {
+    <section>
         <div class="row">
-        @foreach (var accident in Model)
-        {
-                    <div class="col-sm-4">
-                        <div class="card my-1">
-                            <div class="card-header">
-                                @accident.Location
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text h6">@accident.Description</p>
-                                <p class="card-text text-secondary">
-                                    @foreach (var plate in accident.Vehicles.Select(v => v.Plate))
-                                    {
-                                        @plate<br />
-                                    }
-                                </p>
-                            </div>
+            @foreach (var accident in Model)
+            {
+                <div class="col-sm-4">
+                    <div class="card my-1">
+                        <div class="card-header">
+                            @accident.Location
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text h6">@accident.Description</p>
+                            <p class="card-text text-secondary">
+                                @foreach (var plate in accident.Vehicles.Select(v => v.Plate))
+                                {
+                                    @plate<br />
+                                }
+                            </p>
                         </div>
                     </div>
-        }
+                </div>
+            }
         </div>
+    </section>
 }
