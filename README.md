@@ -5,15 +5,11 @@ Mockup Insurance website project for school
 
 ## List Of Things
 ### To Add
-Find plate api
-
-Divide between controller and db querries
-
-Add "See Vehicles" in Admin List Users
-
-Add Search Queries in needed Lists
-
-UI adjustments
+Find plate api;
+Divide between controller and db querries;
+Add "See Vehicles" in Admin List Users;
+Add Search Queries in needed Lists;
+UI adjustments;
 
 ### Problems I encontered
 *Jsonoptions and encoding*
@@ -21,6 +17,10 @@ UI adjustments
 *UI/UX development*
 
 ### Notes
-Started using OpenAI playground to help in solving problems
+Started using OpenAI
 
 Using Azure Data Studio to access the Database Data outside of the website
+
+[Database SQL script](https://github.com/davidrebelo124/SlowInsurance/blob/master/Migrations/SlowInsurance.sql)
+
+[PAP Report](https://github.com/davidrebelo124/SlowInsurance/blob/master/RelatórioPAP_SlowInsurance.docx)
