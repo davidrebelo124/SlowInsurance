@@ -23,4 +23,4 @@ Using Azure Data Studio to access the Database Data outside of the website
 
 [Database SQL script](https://github.com/davidrebelo124/SlowInsurance/blob/master/Migrations/SlowInsurance.sql)
 
-[PAP Report](https://github.com/davidrebelo124/SlowInsurance/blob/master/RelatórioPAP_SlowInsurance.docx)
+[PAP Report](https://github.com/davidrebelo124/SlowInsurance/blob/master/Relat%C3%B3rioPAP_SlowInsurance.docx?raw=true)
