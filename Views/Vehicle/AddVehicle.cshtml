@@ -3,36 +3,38 @@
     ViewData["Title"] = "Add Vehicle";
 }
 <div class="divider"></div>
-<form asp-controller="Vehicle" asp-action="AddVehicle" method="post" class="row g-3" autocomplete="off" autocomplete="off">
-    <h1 class="h3 mb-3 fw-normal">Add vehicle</h1>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="col-md-6 form-floating">
-        <select class="form-select" asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleType>()">
-            <option value="" selected>Choose a type</option>
-        </select>
-        <label asp-for="VehicleType"></label>
-        <span asp-validation-for="VehicleType" class="text-danger"></span>
-    </div>
-    <div class="col-md-6 form-floating">
-        <input type="text" class="form-control" asp-for="Model">
-        <label asp-for="Model"></label>
-        <span asp-validation-for="Model" class="text-danger"></span>
-    </div>
-    <div class="col-md-6 form-floating">
-        <input type="text" class="form-control" asp-for="Plate">
-        <label asp-for="Plate"></label>
-        <span asp-validation-for="Plate" class="text-danger"></span>
-    </div>
-    <div class="form-floating col-md-6">
-        <input type="date" class="form-control" asp-for="RegistrationDate">
-        <label asp-for="RegistrationDate"></label>
-        <span asp-validation-for="RegistrationDate" class="text-danger"></span>
-    </div>
-
-    <div class="container-md px-4 my-5">
-        <div class="row gx-md-3">
-            <button class="btn btn-lg btn-primary col mx-1" type="submit">Add Vehicle</button>
-            <a asp-action="ListVehicles" asp-controller="Vehicle" class="btn btn-lg btn-secondary col mx-1">Cancel</a>
+<section class="container">
+    <form asp-controller="Vehicle" asp-action="AddVehicle" method="post" class="row g-3" autocomplete="off" autocomplete="off">
+        <h1 class="h3 mb-3 fw-normal">Add vehicle</h1>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-6 form-floating">
+            <select class="form-select" asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleType>()">
+                <option value="" selected>Choose a type</option>
+            </select>
+            <label asp-for="VehicleType"></label>
+            <span asp-validation-for="VehicleType" class="text-danger"></span>
         </div>
-    </div>
-</form>
+        <div class="col-md-6 form-floating">
+            <input type="text" class="form-control" asp-for="Model">
+            <label asp-for="Model"></label>
+            <span asp-validation-for="Model" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 form-floating">
+            <input type="text" class="form-control" asp-for="Plate">
+            <label asp-for="Plate"></label>
+            <span asp-validation-for="Plate" class="text-danger"></span>
+        </div>
+        <div class="form-floating col-md-6">
+            <input type="date" class="form-control" asp-for="RegistrationDate">
+            <label asp-for="RegistrationDate"></label>
+            <span asp-validation-for="RegistrationDate" class="text-danger"></span>
+        </div>
+
+        <div class="container-md px-4 my-5">
+            <div class="row gx-md-3">
+                <button class="btn btn-lg btn-primary col mx-1" type="submit">Add Vehicle</button>
+                <a asp-action="ListVehicles" asp-controller="Vehicle" class="btn btn-lg btn-secondary col mx-1">Cancel</a>
+            </div>
+        </div>
+    </form>
+</section>

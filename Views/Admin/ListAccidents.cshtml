@@ -3,6 +3,7 @@
     ViewData["Title"] = "List Accident";
 }
 <div class="divider"></div>
+<section class="container">
 @if (!Model.Any())
 {
         <div class="card">
@@ -22,24 +23,27 @@ else
             <div class="d-grid gap-2">
                 <a asp-action="AddAccident" asp-controller="Admin" class="btn btn-outline-primary btn-lg" style="margin: -10px 0px 20px 0px">Add Accident</a>
             </div>
-        @foreach (var accident in Model)
-        {
-                    <div class="col-sm-4">
-                        <div class="card my-1">
-                            <div class="card-header">
-                                @accident.Location
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text h6">@accident.Description</p>
-                                <p class="card-text text-secondary">
-                                    @foreach (var plate in accident.Vehicles.Select(v => v.Plate))
-                                    {
-                                        @plate<br />
-                                    }
-                                </p>
-                            </div>
+            <div class="divider"></div>
+            @foreach (var accident in Model)
+            {
+                <div class="col-sm-4">
+                    <div class="card my-1">
+                        <div class="card-header">
+                            @accident.Location
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text h6">@accident.Description</p>
+                            <p class="card-text text-secondary">
+                                @foreach (var plate in accident.Vehicles.Select(v => v.Plate))
+                                {
+                                    @plate<br />
+                                }
+                            </p>
                         </div>
                     </div>
-        }
+                </div>
+            }
         </div>
 }
+</section>
+<div class="divider"></div>

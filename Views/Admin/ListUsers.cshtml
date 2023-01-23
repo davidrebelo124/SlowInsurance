@@ -3,38 +3,41 @@
     ViewData["Title"] = "Users";
 }
 <div class="divider"></div>
-<table class="table table-dark table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
+<section class="container">
+    <h1 class="h3 mb-3 fw-normal fw-bold">List of Users</h1>
+    <table class="table table-striped table-hover">
+        <thead class="table-secondary">
             <tr>
-                <td>@user.Name</td>
-                <td>@user.Email</td>
-                <td>
-                    @if (user.Email != User.Identity.Name && user.Id != "8da842fc-7aba-4cbb-9668-a7e56e92ad96")
-                    {
-                        @if (user.IsAdmin)
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>
+                        @if (user.Email != User.Identity.Name && user.Id != "8da842fc-7aba-4cbb-9668-a7e56e92ad96")
                         {
-                            <a class="btn btn-danger text-nowrap" asp-action="RemoveAdminRole" asp-route-id="@user.Id">Remove Admin Role</a>
+                            @if (user.IsAdmin)
+                            {
+                                <a class="btn btn-danger text-nowrap" asp-action="RemoveAdminRole" asp-route-id="@user.Id">Remove Admin Role</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success text-nowrap" asp-action="GiveAdminRole" asp-route-id="@user.Id">Give Admin Role</a>
+                            }
                         }
                         else
                         {
-                            <a class="btn btn-success text-nowrap" asp-action="GiveAdminRole" asp-route-id="@user.Id">Give Admin Role</a>
+                            <a class="btn btn-outline-primary disabled text-nowrap">No actions to take</a>
                         }
-                    }
-                    else
-                    {
-                        <a class="btn btn-outline-primary disabled text-nowrap">No actions to take</a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

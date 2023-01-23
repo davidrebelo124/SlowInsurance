@@ -8,6 +8,7 @@ namespace SlowInsurance.Models.Invoice
     {
         [Required]
         [EnumDataType(typeof(PaymentType), ErrorMessage = "Invalid payment type")]
+        [Display(Name = "Payment Type")]
         public PaymentType PaymentType { get; set; }
         [Required]
         public double Value { get; set; }

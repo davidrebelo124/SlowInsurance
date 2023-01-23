@@ -3,6 +3,7 @@
     ViewData["Title"] = "Vehicles";
 }
 <div class="divider"></div>
+<section class="container">
 @if (Model.Count() is 0)
 {
     <div class="card">
@@ -24,17 +25,23 @@ else
             <a asp-action="PrintAll" asp-controller="Vehicle" class="btn btn-outline-info btn-lg">Print All</a>
         </div>
         @foreach(var vehicle in Model){
-            <div class="col-sm-4">
-                <div class="card my-1">
+            <div class="col-xl-6">
+                <div class="card my-3">
+                    <div class="card-header">
+                            @vehicle.Plate
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">@vehicle.Model - @vehicle.Plate</h5>
+                        <div class="card-title">
+                            <h5>@vehicle.Model</h5>
+                        </div>
                         <p class="card-text">Registration Date: @vehicle.RegistrationDate.ToString("dd/MM/yyyy")</p>
                         <p class="card-text">Adhesion Date: @vehicle.AdhesionDate.ToString("dd/MM/yyyy")</p>
                         <a asp-action="ListInvoices" asp-controller="Invoice" asp-route-id="@vehicle.Plate" class="btn btn-primary">See Invoices</a>
-                        <a asp-action="Print" asp-controller="Vehicle" asp-route-id="@vehicle.Plate" class="btn btn-outline-info">Print Invoices</a>
+                        <a asp-action="Print" asp-controller="Vehicle" asp-route-id="@vehicle.Plate" class="btn btn-outline-info text-nowrap">Print Invoices</a>
                     </div>
                 </div>
             </div>
         }
     </div>
 }
+</section>

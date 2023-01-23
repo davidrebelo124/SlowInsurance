@@ -9,7 +9,6 @@
 
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#password');
-
     if (password != null) {
         //Toggle Password
 
@@ -20,33 +19,32 @@
             // toggle the eye slash icon
             this.classList.toggle('fa-eye-slash');
         });
+    }
 
-        //Toggle confirm password
-        const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
-        const confirmpassword = document.querySelector('#confirmpassword');
+    //Toggle confirm password
+    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+    const confirmpassword = document.querySelector('#confirmpassword');
+    if (toggleConfirmPassword != null) {
+        toggleConfirmPassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = confirmpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmpassword.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    }
 
-        if (confirmpassord != null) {
-            toggleConfirmPassword.addEventListener('click', function (e) {
-                // toggle the type attribute
-                const type = confirmpassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                confirmpassword.setAttribute('type', type);
-                // toggle the eye slash icon
-                this.classList.toggle('fa-eye-slash');
-            });
-        }
-
-        //Toggle current password
-        const toggleCurrentPassword = document.querySelector('#toggleCurrentPassword');
-        const currentpassword = document.querySelector('#currentpassword');
-        if (currentpassword != null) {
-            toggleCurrentPassword.addEventListener('click', function (e) {
-                // toggle the type attribute
-                const type = currentpassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                currentpassword.setAttribute('type', type);
-                // toggle the eye slash icon
-                this.classList.toggle('fa-eye-slash');
-            });
-        }
+    //Toggle current password
+    const toggleCurrentPassword = document.querySelector('#toggleCurrentPassword');
+    const currentpassword = document.querySelector('#currentpassword');
+    if (currentpassword != null) {
+        toggleCurrentPassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = currentpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            currentpassword.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
     }
 
     // enable Tooltips

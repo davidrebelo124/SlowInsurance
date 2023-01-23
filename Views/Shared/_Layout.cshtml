@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SlowInsurance.styles.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/SlowInsurance.styles.css" asp-append-version="true" />*@
 </head>
 <body>
     <header id="header" class="fixed-top d-flex align-items-center">
@@ -32,15 +32,29 @@
                 @if (signInManager.IsSignedIn(User))
                 {
                     <li><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a class="nav-link" asp-controller="Vehicle" asp-action="ListVehicles">Vehicles</a></li>
+                    <li class="dropdown">
+                        <a asp-controller="Vehicle" asp-action="ListVehicles"><span>Vehicles</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a class="nav-link" asp-controller="Vehicle" asp-action="ListVehicles">Vehicles</a></li>
+                            <li><a class="nav-link" asp-controller="Vehicle" asp-action="AddVehicle">Add Vehicle</a></li>
+                        </ul>
+                    </li>
                     <li><a class="nav-link" asp-controller="Invoice" asp-action="ListInvoices">Invoices</a></li>
                     <li><a class="nav-link" asp-controller="Accident" asp-action="ListAccidents">Accidents</a></li>
-                    <li class="dropdown"><a><span>@userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name</span> <i class="bi bi-chevron-down"></i></a>
+                        <li class="dropdown">
+                            <a style="nav-link" href="#"><span>@userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             <li><a asp-action="AccountDetails" asp-controller="Account">Profile</a></li>
                             @if (User.IsInRole("Admin"))
                             {
-                            <li><a asp-action="MainPage" asp-controller="Admin">Admin Page</a></li>
+                                @*<li><a asp-action="MainPage" asp-controller="Admin">Admin Page</a></li>*@
+                                    <li class="dropdown">
+                                        <a asp-action="MainPage" asp-controller="Admin"><span>Admin Section</span> <i class="bi bi-chevron-right"></i></a>
+                                    <ul>
+                                        <li><a asp-action="ListUsers" asp-controller="Admin">Users</a></li>
+                                        <li><a asp-action="ListAccidents" asp-controller="Admin">Accidents</a></li>
+                                    </ul>
+                                </li>
                             }
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Sign out</a></li>

@@ -4,6 +4,7 @@
 }
 
 <div class="divider"></div>
+<section class="container">
 @if (!Model.Any())
 {
     <section>
@@ -20,12 +21,13 @@
 }
 else
 {
+    <h1 class="h3 mb-3 fw-normal fw-bold">Record of Accidents</h1>
     <section>
         <div class="row">
             @foreach (var accident in Model)
             {
-                <div class="col-sm-4">
-                    <div class="card my-1">
+                <div class="col-xl-4">
+                    <div class="card my-2">
                         <div class="card-header">
                             @accident.Location
                         </div>
@@ -44,3 +46,4 @@ else
         </div>
     </section>
 }
+</section>

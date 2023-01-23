@@ -3,6 +3,7 @@
     ViewData["Title"] = "Renew Invoice";
 }
 <div class="divider"></div>
+<section class="container">
 <form asp-controller="Invoice" asp-action="RenewInvoice" method="post" class="row g-3">
     <h1 class="h3 mb-3 fw-normal">Renew Invoice - @Model.Model</h1>
     <input hidden asp-for="Plate" />
@@ -28,3 +29,4 @@
         </div>
     </div>
 </form>
+</section>
