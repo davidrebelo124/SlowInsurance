@@ -1,15 +1,15 @@
-![Slowinsurance Icon](https://raw.githubusercontent.com/davidrebelo124/SlowInsurance/master/wwwroot/favicon.ico)
+![Slowinsurance Icon](https://raw.githubusercontent.com/davidrebelo124/SlowInsurance/master/wwwroot/images/iconWhite.png)
 # ***SlowInsurance***
 Mockup Insurance website project for school
 
 
 ## List Of Things
 ### To Add
-- Find plate api
-- Divide between controller and db querries
-- Add "See Vehicles" in Admin List Users
-- Add Search Queries in needed Lists
-- [x] UI adjustments
+[ ] Find plate api
+[ ] Divide between controller and db querries
+[ ] Add "See Vehicles" in Admin List Users
+[ ]Add Search Queries in needed Lists
+[x] UI adjustments
 
 ### Problems I encontered
 - *Jsonoptions and encoding*

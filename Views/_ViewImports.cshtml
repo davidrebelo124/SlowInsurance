@@ -7,8 +7,10 @@
 @using SlowInsurance.Models.Accident
 @using SlowInsurance.Models.Invoice
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore;
 
 @inject UserManager<ClientEntity> userManager;
 @inject SignInManager<ClientEntity> signInManager;
+@inject SlowInsurance.Repo.InsuranceDbContext context;
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

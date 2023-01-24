@@ -42,7 +42,7 @@
                     <li><a class="nav-link" asp-controller="Invoice" asp-action="ListInvoices">Invoices</a></li>
                     <li><a class="nav-link" asp-controller="Accident" asp-action="ListAccidents">Accidents</a></li>
                         <li class="dropdown">
-                            <a style="nav-link" href="#"><span>@userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name</span> <i class="bi bi-chevron-down"></i></a>
+                            <a class="nav-link"><span>@userManager.FindByEmailAsync(User?.Identity?.Name).Result.Name</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             <li><a asp-action="AccountDetails" asp-controller="Account">Profile</a></li>
                             @if (User.IsInRole("Admin"))

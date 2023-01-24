@@ -3,7 +3,7 @@
 }
 
 <div class="divider"></div>
-<section class="container">
+@*<section class="container">
     <div class="rounded-5 border-5 m-5 p-5" style="background-color: rgb(5, 44, 101); border-color: rgb(5, 44, 101);">
         <div class="d-grid gap-5">
             <a asp-controller="Admin" asp-action="ListAccidents" class="btn btn-primary">Go to Accidents</a>
@@ -11,4 +11,54 @@
         </div>
     </div>
 </section>
-<div class="divider"></div>
+<div class="divider"></div>*@
+
+<section id="services" class="services section-bg">
+    <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+            <h2>Admin Page</h2>
+            <p>Here you can act on your admin role.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up">
+                <a asp-controller="Admin" asp-action="ListUsers">
+                    <div class="icon-box icon-box-pink">
+                        <div class="icon"><i class='bx bxs-user'></i></div>
+                        <h4 class="title">Users</h4>
+                        <p class="description">Here you can manage all and any of your company clients</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+                <a asp-controller="Admin" asp-action="ListAccidents">
+                    <div class="icon-box icon-box-cyan">
+                        <div class="icon"><i class='bx bxs-error-alt'></i></div>
+                        <h4 class="title">Accidents</h4>
+                        <p class="description">Here you can manage all accidents relative to the company</p>
+                    </div>
+                </a>
+            </div>
+
+            @*<div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon-box icon-box-green">
+                    <div class="icon"><i class="bx bx-tachometer"></i></div>
+                    <h4 class="title"><a href="">Magni Dolores</a></h4>
+                    <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
+                <div class="icon-box icon-box-blue">
+                    <div class="icon"><i class="bx bx-world"></i></div>
+                    <h4 class="title"><a href="">Nemo Enim</a></h4>
+                    <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
+                </div>
+            </div>*@
+
+        </div>
+
+    </div>
+</section><!-- End Services Section -->
