@@ -6,6 +6,7 @@ using SlowInsurance.Models.Accident;
 using SlowInsurance.Models.Admin;
 using SlowInsurance.Models.Vehicle;
 using SlowInsurance.Repo;
+using System.Text.RegularExpressions;
 
 namespace SlowInsurance.Controllers
 {
@@ -116,7 +117,7 @@ namespace SlowInsurance.Controllers
             }
 
             var vPlates = new List<string>();
-            if (model.Vehicles.Contains(","))
+            if (model.Vehicles.Contains(','))
                 vPlates = model.Vehicles.Split(",").ToList();
             else
                 vPlates.Add(model.Vehicles);
@@ -126,6 +127,19 @@ namespace SlowInsurance.Controllers
             {
                 if (context.Vehicle.Any(ve => ve.Plate == v))
                     vehicles.Add(context.Vehicle.Where(ve => ve.Plate == v).First());
+                else if (Regex.IsMatch(v, @"^(([A-Z]{2}-\d{2}-(\d{2}|[A-Z]{2}))|(\d{2}-(\d{2}-[A-Z]{2}|[A-Z]{2}-\d{2})))$"))
+                {
+                    vehicles.Add(new VehicleEntity
+                    {
+                        Plate = v,
+                        Accidents = new List<AccidentEntity>(),
+                        AdhesionDate = "Unkwon",
+                        Invoices = new List<InvoiceEntity>(),
+                        Model = "Unkwon",
+                        RegistrationDate = "Unknown",
+                        VehicleType = "Unkwon",
+                    });
+                }
                 else
                 {
                     ModelState.AddModelError(nameof(model.Vehicles), $"{v} is not a valid plate");

@@ -20,7 +20,7 @@
 }
 else
 {
-        <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover">
         @if (ViewBag.HasId)
         {
             var plate = JsonSerializer.Deserialize<VehicleModel>(Model.First().Vehicle).Plate;
@@ -30,8 +30,9 @@ else
             <tr>
                 <th scope="col">Vehicle</th>
                 <th scope="col">Value</th>
-                <th scope="col">Issued Date</th>
-                <th scope="col">Expiration Date</th>
+                <th scope="col" class="d-none d-sm-table-cell">Issued Date</th>
+                <th scope="col" class="d-none d-sm-table-cell">Expiration Date</th>
+                <th scope="col" class="d-table-cell d-sm-none">Validity</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -42,15 +43,31 @@ else
                 <tr>
                     <td>@vehicle.Model</td>
                     <td>@invoice.Value</td>
-                    <td>@invoice.IssuedDate.Value.ToString("dd/MM/yyyy")</td>
-                    @if (invoice.ExpirationDate.Value == DateTime.MinValue)
-                    {
-                        <td>/  /</td>
-                    }
-                    else
-                    {
-                        <td>@invoice.ExpirationDate.Value.ToString("dd/MM/yyyy")</td>
-                    }
+                    <td class="d-none d-sm-table-cell">@invoice.IssuedDate.Value.ToString("dd/MM/yyyy")</td>
+                    <td class="d-none d-sm-table-cell">
+                        @if (invoice.ExpirationDate.Value != DateTime.MinValue)
+                        {
+                            @invoice.ExpirationDate.Value.ToString("dd/MM/yyyy")
+                        }
+                        else
+                        {
+                            @Html.Raw("Renewed")
+                        }
+                    </td>
+                    <td class="d-table-cell d-sm-none">
+                        @{
+                            var val = "";
+                            if (invoice.ExpirationDate.Value != DateTime.MinValue)
+                            {
+                                val = $"{invoice.IssuedDate.Value.ToString("dd/MM/yyyy")}\n{invoice.ExpirationDate.Value.ToString("dd/MM/yyyy")}";
+                            }
+                            else
+                            {
+                                val = $"{invoice.IssuedDate.Value.ToString("dd/MM/yyyy")}";
+                            }
+                        }
+                        @Html.Raw(val)
+                    </td>
                     <td>
                     @if (invoice.IsRenewalNeeded)
                     {
