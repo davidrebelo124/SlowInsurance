@@ -5,11 +5,11 @@ Mockup Insurance website project for school
 
 ## List Of Things
 ### To Add
-[ ] Find plate api
-[ ] Divide between controller and db querries
-[ ] Add "See Vehicles" in Admin List Users
-[ ]Add Search Queries in needed Lists
-[x] UI adjustments
+- [x] UI adjustments
+- [ ] Find plate api
+- [ ] Divide between controller and db querries
+- [ ] Add "See Vehicles" in Admin List Users
+- [ ] Add Search Queries in needed Lists
 
 ### Problems I encontered
 - *Jsonoptions and encoding*
