@@ -7,10 +7,10 @@ Mockup Insurance website project for school
 ### To Add
 - [x] UI adjustments
 - [x] Add "See Vehicles" in Admin List Users
+- [x] Let Accidents have all valid plates, even if not in db 
 - [ ] Find plate api
 - [ ] Divide between controller and db querries
 - [ ] Add Search Queries in needed Lists
-- [ ] Let Accidents have all valid plates, even if not in db 
 
 ### Problems I encontered
 - *Jsonoptions and encoding*

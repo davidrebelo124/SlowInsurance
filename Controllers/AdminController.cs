@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SlowInsurance.Entity;
 using SlowInsurance.Models.Accident;
 using SlowInsurance.Models.Admin;
@@ -43,6 +44,26 @@ namespace SlowInsurance.Controllers
                 .ThenBy(u => u.Name)
                 .ToList();
             return View(users);
+        }
+
+        [HttpPost]
+        public IActionResult ListUsers(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var users = context.Users
+                            .AsEnumerable()
+                            .Where(u => u.Name!.Contains(id) || u.UserName.Contains(id))
+                            .Select(u => new ListUserModel
+                            {
+                                Id = u.Id,
+                                Name = u.Name,
+                                Email = u.Email,
+                                IsAdmin = userManager.IsInRoleAsync(u, "Admin").Result,
+                            }).ToList();
+                return View(users);
+            }
+            return RedirectToAction("ListUsers");
         }
 
         [HttpGet]

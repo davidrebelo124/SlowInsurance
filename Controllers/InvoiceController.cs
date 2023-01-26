@@ -17,7 +17,7 @@ namespace SlowInsurance.Controllers
     [Authorize]
     public class InvoiceController : Controller
     {
-        private const double DEFAULT_VALUE = 18;
+        private const double DEFAULT_VALUE = 17.99;
         private readonly InsuranceDbContext context;
         private readonly IOptions<JsonOptions> options;
 
