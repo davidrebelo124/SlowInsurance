@@ -9,7 +9,6 @@ Mockup Insurance website project for school
 - [x] Add "See Vehicles" in Admin List Users
 - [x] Let Accidents have all valid plates, even if not in db 
 - [x] Add Search Queries in needed Lists
-- [ ] Find plate api
 - [ ] Divide between controller and db querries
 - [ ] Add realism to mock-up transactions
 	- [ ] MBWay
