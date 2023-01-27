@@ -11,6 +11,10 @@ Mockup Insurance website project for school
 - [x] Add Search Queries in needed Lists
 - [ ] Find plate api
 - [ ] Divide between controller and db querries
+- [ ] Add realism to mock-up transactions
+	- [ ] MBWay
+	- [ ] MBReference
+	- [ ] Credit/Debit Card
 
 ### Problems I encontered
 - *Jsonoptions and encoding*
