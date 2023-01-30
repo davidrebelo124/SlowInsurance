@@ -42,42 +42,41 @@ namespace SlowInsurance.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(RegisterModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
-            if (DateTime.Parse(model.Birthday) > DateTime.Now.AddYears(-18) || DateTime.Parse(model.Birthday) < DateTime.Now.AddYears(-118))
+            if (DateTime.Parse(model.Birthday!) > DateTime.Now.AddYears(-18) || DateTime.Parse(model.Birthday!) < DateTime.Now.AddYears(-118))
             {
                 ModelState.AddModelError(nameof(model.Birthday), "Not a valid date");
                 return View(model);
             }
-            if (ModelState.IsValid)
+
+            var user = new ClientEntity
             {
-                var user = new ClientEntity
-                {
-                    UserName = model.Email,
-                    Name = model.Name,
-                    Address = model.Address,
-                    NIF = model.NIF,
-                    IBAN = model.IBAN,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    Birthday = model.Birthday,
-                    Historic = model.Historic,
-                    DriverLicense = model.DriverLicense
-                };
-                var result = await userManager.CreateAsync(user, model.Password);
+                UserName = model.Email,
+                Name = model.Name,
+                Address = model.Address,
+                NIF = model.NIF,
+                IBAN = model.IBAN,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
+                Birthday = model.Birthday,
+                Historic = model.Historic,
+                DriverLicense = model.DriverLicense
+            };
+            var result = await userManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
-                {
-                    await signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+            if (result.Succeeded)
+            {
+                await signInManager.SignInAsync(user, false);
+                return RedirectToAction("Index", "Home");
             }
 
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
             return View(model);
         }
 
@@ -221,7 +220,10 @@ namespace SlowInsurance.Controllers
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var callback = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
 
-            var message = new Message(new string[] { user.Email }, "Reset password token", callback);
+            // email html
+            var content = $"<a class=\"btn btn-primary btn-lg\" href=\"{callback}\">Click here to reset your password</a>";
+
+            var message = new Message(new string[] { user.Email }, "Reset your password | Slow Insurance", content);
             await emailSender.SendEmailAsync(message);
 
             return RedirectToAction("ForgotPasswordConfirmation");
@@ -245,13 +247,13 @@ namespace SlowInsurance.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             if (!ModelState.IsValid)
-                return View(resetPasswordModel);
+                return RedirectToAction("ResetPassword", new { token = resetPasswordModel.Token, email = resetPasswordModel.Email});
 
             var user = await userManager.FindByEmailAsync(resetPasswordModel.Email);
-            if (user == null)
+            if (user is null)
                 RedirectToAction(nameof(ResetPasswordConfirmation));
 
-            var resetPassResult = await userManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
+            var resetPassResult = await userManager.ResetPasswordAsync(user!, resetPasswordModel.Token, resetPasswordModel.Password);
             if (!resetPassResult.Succeeded)
             {
                 foreach (var error in resetPassResult.Errors)

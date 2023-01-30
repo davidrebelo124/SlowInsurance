@@ -10,11 +10,12 @@ Mockup Insurance website project for school
 - [x] Let Accidents have all valid plates, even if not in db 
 - [x] Add Search Queries in needed Lists
 - [ ] Divide between controller and db querries
+- [ ] Ask for Assistance systemn
+- [ ] Separate Sign Up to 2 pages
 - [ ] Add realism to mock-up transactions
 	- [ ] MBWay
 	- [ ] MBReference
 	- [ ] Credit/Debit Card
-
 ### Problems I encontered
 - *Jsonoptions and encoding*
 - *UI/UX development*

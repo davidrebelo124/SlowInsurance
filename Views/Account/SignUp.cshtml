@@ -65,24 +65,32 @@
             <label asp-for="Historic"></label>
             <span asp-validation-for="Historic" class="text-danger"></span>
         </div>
-
-        <div class="input-group">
-            <div class="form-floating my-1">
+        
+        @*Password*@
+        <div class="input-group mb-3">
+            <div class="form-floating">
                 <input type="password" class="form-control" id="password" asp-for="Password" placeholder="Password">
                 <label asp-for="Password">Password</label>
-                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <i class="far fa-eye input-group-text my-1" style="cursor: pointer;height: 90%;" id="togglePassword"></i>
+            <span class="input-group-text bg-transparent">
+                <i class="far fa-eye fa-fw" style="cursor: pointer;" id="togglePassword"></i>
+            </span>
         </div>
+        <span asp-validation-for="Password" class="text-danger" style="margin-top: -15px"></span>
+        @*End*@
 
-        <div class="input-group">
-            <div class="form-floating my-1 col-md-6">
+        @*Confirm Password*@
+        <div class="input-group mb-3">
+            <div class="form-floating">
                 <input type="password" class="form-control" id="confirmpassword" asp-for="ConfirmPassword" placeholder="Confirm Password">
-                <label asp-for="ConfirmPassword"></label>
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <label asp-for="ConfirmPassword">Confirm Password</label>
             </div>
-            <i class="far fa-eye input-group-text my-1" style="cursor: pointer;height: 90%;" id="toggleConfirmPassword"></i>
+            <span class="input-group-text bg-transparent">
+                <i class="far fa-eye fa-fw" style="cursor: pointer;" id="toggleConfirmPassword"></i>
+            </span>
         </div>
+        <span asp-validation-for="ConfirmPassword" class="text-danger" style="margin-top: -15px"></span>
+        @*End*@
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
         <a asp-action="Login" asp-controller="Account" class="align-self-sm-center align-content-sm-center align-items-sm-center justify-content-sm-center">Already have an account?</a>
