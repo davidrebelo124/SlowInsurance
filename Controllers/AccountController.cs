@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using PhoneNumbers;
 using SlowInsurance.Entity;
 using SlowInsurance.Models.Account;
+using SlowInsurance.Models.Invoice;
 using SlowInsurance.Repo;
 using System.Text;
 using System.Text.Json;
@@ -20,6 +22,7 @@ namespace SlowInsurance.Controllers
         private readonly InsuranceDbContext context;
         private readonly IEmailSender emailSender;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly PhoneNumberUtil pUtil;
 
         public AccountController(IOptions<JsonOptions> options, UserManager<ClientEntity> userManager, SignInManager<ClientEntity> signInManager, InsuranceDbContext context, IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
         {
@@ -29,6 +32,7 @@ namespace SlowInsurance.Controllers
             this.context = context;
             this.emailSender = emailSender;
             this.roleManager = roleManager;
+            pUtil = PhoneNumberUtil.GetInstance();
         }
 
         [HttpGet]
@@ -40,7 +44,38 @@ namespace SlowInsurance.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp(RegisterModel model)
+        public IActionResult SignUp(CreateAccountModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var userData = Encoding.UTF8.GetString(JsonSerializer.SerializeToUtf8Bytes(model));
+            TempData["UserData"] = userData;
+
+            return RedirectToAction("CompleteSignUp");
+        }
+
+        [HttpGet]
+        public IActionResult CompleteSignUp()
+        {
+            if (TempData["UserData"] is null)
+                return NotFound();
+
+            var userData = JsonSerializer.Deserialize<CreateAccountModel>(TempData["UserData"]!.ToString()!);
+
+            var continueSignUp = new CompleteRegisterModel
+            {
+                Email = userData!.Email,
+                ConfirmPassword = userData.ConfirmPassword,
+                Password = userData.Password,
+                Name = userData.Name,
+            };
+
+            return View(continueSignUp);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CompleteSignUp(CompleteRegisterModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -49,6 +84,11 @@ namespace SlowInsurance.Controllers
             if (DateTime.Parse(model.Birthday!) > DateTime.Now.AddYears(-18) || DateTime.Parse(model.Birthday!) < DateTime.Now.AddYears(-118))
             {
                 ModelState.AddModelError(nameof(model.Birthday), "Not a valid date");
+                return View(model);
+            }
+            if (!pUtil.IsValidNumber(pUtil.Parse(model.PhoneNumber, "PT")))
+            {
+                ModelState.AddModelError(nameof(model.PhoneNumber), "Not a valid number");
                 return View(model);
             }
 
@@ -63,7 +103,6 @@ namespace SlowInsurance.Controllers
                 Email = model.Email,
                 Birthday = model.Birthday,
                 Historic = model.Historic,
-                DriverLicense = model.DriverLicense
             };
             var result = await userManager.CreateAsync(user, model.Password);
 
@@ -136,7 +175,6 @@ namespace SlowInsurance.Controllers
                 Name = user.Name,
                 Address = user.Address,
                 Birthday = user.Birthday,
-                DriverLicense = user.DriverLicense,
                 Historic = user.Historic,
                 IBAN = user.IBAN,
                 NIF = user.NIF,
@@ -164,7 +202,6 @@ namespace SlowInsurance.Controllers
                 user.Name = model.Name;
                 user.Address = model.Address;
                 user.Birthday = model.Birthday;
-                user.DriverLicense = model.DriverLicense;
                 user.Historic = model.Historic;
                 user.IBAN = model.IBAN;
                 user.NIF = model.NIF;
@@ -187,7 +224,6 @@ namespace SlowInsurance.Controllers
                 {
                     Address = user.Address,
                     Birthday = user.Birthday,
-                    DriverLicense = user.DriverLicense,
                     Email = user.Email,
                     EmailChanged = user.Email,
                     Historic = user.Historic,
@@ -321,7 +357,6 @@ namespace SlowInsurance.Controllers
                 Name = user.Name,
                 Address = user.Address,
                 Birthday = user.Birthday,
-                DriverLicense = user.DriverLicense,
                 Historic = user.Historic,
                 IBAN = user.IBAN,
                 NIF = user.NIF,

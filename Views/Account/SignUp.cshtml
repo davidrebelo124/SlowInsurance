@@ -1,98 +1,56 @@
-﻿@model RegisterModel
+﻿@model CreateAccountModel
 @{
     ViewData["Title"] = "Sign Up";
 }
-<style>
-    /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
 
-    /* Firefox */
-    input[type=number] {
-        -moz-appearance: textfield;
-    }
-</style>
 <div class="divider"></div>
-<section class="container">
-    <form asp-controller="Account" asp-action="SignUp" method="post" class="row g-3" autocomplete="off">
-        <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-floating my-1 col-md-6">
-            <input type="text" class="form-control" asp-for="Name" placeholder="Name">
-            <label asp-for="Name"></label>
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-md-6">
-            <input type="email" class="form-control" asp-for="Email" placeholder="name@example.com">
-            <label asp-for="Email"></label>
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-16">
-            <input type="text" class="form-control" asp-for="Address" placeholder="Address">
-            <label asp-for="Address"></label>
-            <span asp-validation-for="Address" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-md-6">
-            <input type="number" class="form-control" asp-for="NIF" placeholder="NIF">
-            <label asp-for="NIF"></label>
-            <span asp-validation-for="NIF" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-md-6">
-            <input type="text" class="form-control" asp-for="IBAN" placeholder="IBAN">
-            <label asp-for="IBAN"></label>
-            <span asp-validation-for="IBAN" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-md-6">
-            <input type="number" class="form-control" asp-for="PhoneNumber" placeholder="Phone Number">
-            <label asp-for="PhoneNumber"></label>
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-md-6">
-            <input type="date" class="form-control" asp-for="Birthday" placeholder="Birthday">
-            <label asp-for="Birthday"></label>
-            <span asp-validation-for="Birthday" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-16">
-            <input type="number" class="form-control" asp-for="DriverLicense" placeholder="Driver's License Number">
-            <label asp-for="DriverLicense"></label>
-            <span asp-validation-for="DriverLicense" class="text-danger"></span>
-        </div>
-        <div class="form-floating my-1 col-16">
-            <textarea class="form-control" asp-for="Historic" style="height: 150px" placeholder="Historic"></textarea>
-            <label asp-for="Historic"></label>
-            <span asp-validation-for="Historic" class="text-danger"></span>
-        </div>
-        
-        @*Password*@
-        <div class="input-group mb-3">
-            <div class="form-floating">
-                <input type="password" class="form-control" id="password" asp-for="Password" placeholder="Password">
-                <label asp-for="Password">Password</label>
-            </div>
-            <span class="input-group-text bg-transparent">
-                <i class="far fa-eye fa-fw" style="cursor: pointer;" id="togglePassword"></i>
-            </span>
-        </div>
-        <span asp-validation-for="Password" class="text-danger" style="margin-top: -15px"></span>
-        @*End*@
+<section>
+    <div class="container text-center w-75">
+        <form asp-controller="Account" asp-action="SignUp" method="post" class="row g-3" autocomplete="off">
+            <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
-        @*Confirm Password*@
-        <div class="input-group mb-3">
-            <div class="form-floating">
-                <input type="password" class="form-control" id="confirmpassword" asp-for="ConfirmPassword" placeholder="Confirm Password">
-                <label asp-for="ConfirmPassword">Confirm Password</label>
-            </div>
-            <span class="input-group-text bg-transparent">
-                <i class="far fa-eye fa-fw" style="cursor: pointer;" id="toggleConfirmPassword"></i>
-            </span>
-        </div>
-        <span asp-validation-for="ConfirmPassword" class="text-danger" style="margin-top: -15px"></span>
-        @*End*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
+            <div class="form-floating my-1 col-md-6">
+                <input type="text" class="form-control" asp-for="Name" placeholder="Name">
+                <label asp-for="Name"></label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating my-1 col-md-6 mb-3">
+                <input type="email" class="form-control" asp-for="Email" placeholder="name@example.com">
+                <label asp-for="Email">Email Address</label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            @*Password*@
+            <div class="input-group my-1">
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="password" asp-for="Password" placeholder="Password">
+                    <label asp-for="Password">Password</label>
+                </div>
+                <span class="input-group-text bg-transparent">
+                    <i class="far fa-eye fa-fw" style="cursor: pointer;" id="togglePassword"></i>
+                </span>
+            </div>
+            <span asp-validation-for="Password" class="text-danger" style="margin-top: -5px"></span>
+            @*End*@
+
+            @*Confirm Password*@
+            <div class="input-group my-1">
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="confirmpassword" asp-for="ConfirmPassword" placeholder="Confirm Password">
+                    <label asp-for="ConfirmPassword">Confirm Password</label>
+                </div>
+                <span class="input-group-text bg-transparent">
+                    <i class="far fa-eye fa-fw" style="cursor: pointer;" id="toggleConfirmPassword"></i>
+                </span>
+            </div>
+            <span asp-validation-for="ConfirmPassword" class="text-danger" style="margin-top: -5px"></span>
+            @*End*@
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Continue</button>
+        </form>
         <a asp-action="Login" asp-controller="Account" class="align-self-sm-center align-content-sm-center align-items-sm-center justify-content-sm-center">Already have an account?</a>
-    </form>
+    </div>
 </section>

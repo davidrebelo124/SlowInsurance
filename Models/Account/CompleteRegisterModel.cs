@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SlowInsurance.Models.Account
 {
-    public class RegisterModel
+    public class CompleteRegisterModel
     {
         [Required]
         [MaxLength(70)]
@@ -23,11 +23,6 @@ namespace SlowInsurance.Models.Account
         public string? Birthday { get; set; }
         [Required]
         public string? Historic { get; set; }
-        [Required]
-        [MaxLength(9)]
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Driver's License Number")]
-        public string? DriverLicense { get; set; }
         [Required]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]

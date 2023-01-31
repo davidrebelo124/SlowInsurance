@@ -22,8 +22,6 @@ namespace SlowInsurance.Entity
         public string? Birthday { get; set; }
         [Required]
         public string? Historic { get; set; }
-        [Required]
-        public string? DriverLicense { get; set; }
 
         public virtual ICollection<VehicleEntity> Vehicles { get; set; }
     }

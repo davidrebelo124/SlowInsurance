@@ -93,8 +93,29 @@ namespace SlowInsurance.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteAccount(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
-            await userManager.DeleteAsync(user);
+            var user = context.Users.Where(u => u.Id == id).Include(u => u.Vehicles).First();
+            try
+            {
+                await userManager.DeleteAsync(user);
+            }
+            catch (Exception)
+            {
+                foreach (var v in user.Vehicles)
+                {
+                    context.Vehicle.Remove(v);
+                    context.Vehicle.Add(new VehicleEntity
+                    {
+                        Plate = v.Plate,
+                        Accidents = v.Accidents,
+                        AdhesionDate = "Unknwon",
+                        Invoices = v.Invoices,
+                        Model = "Unknwon",
+                        RegistrationDate = "Unknown",
+                        VehicleType = "Unknwon",
+                    });
+                }
+                await userManager.DeleteAsync(user);
+            }
             return RedirectToAction("ListUsers");
         }
 
@@ -154,11 +175,11 @@ namespace SlowInsurance.Controllers
                     {
                         Plate = v,
                         Accidents = new List<AccidentEntity>(),
-                        AdhesionDate = "Unkwon",
+                        AdhesionDate = "Unknwon",
                         Invoices = new List<InvoiceEntity>(),
-                        Model = "Unkwon",
+                        Model = "Unknwon",
                         RegistrationDate = "Unknown",
-                        VehicleType = "Unkwon",
+                        VehicleType = "Unknwon",
                     });
                 }
                 else

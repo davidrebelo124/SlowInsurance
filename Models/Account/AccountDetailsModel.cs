@@ -17,9 +17,6 @@ namespace SlowInsurance.Models.Account
         [Required]
         public string? Historic { get; set; }
         [Required]
-        [Display(Name = "Driver's License Number")]
-        public string? DriverLicense { get; set; }
-        [Required]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
