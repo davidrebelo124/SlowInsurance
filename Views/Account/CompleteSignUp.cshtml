@@ -1,6 +1,7 @@
 ﻿@model CompleteRegisterModel
 @{
     ViewData["Title"] = "Complete Sign Up";
+    Model.Password = Model.ConfirmPassword;
 }
 <style>
     /* Chrome, Safari, Edge, Opera */
@@ -17,8 +18,8 @@
 </style>
 <div class="divider"></div>
 <section class="container">
-    <form asp-controller="Account" asp-action="SignUp" method="post" class="row g-3" autocomplete="off">
-        <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+    <form asp-controller="Account" asp-action="CompleteSignUp" method="post" class="row g-3" autocomplete="off">
+        <h1 class="h3 mb-3 fw-normal">Please continue</h1>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         
         <input asp-for="Name" hidden>
@@ -59,6 +60,5 @@
         
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
-        <a asp-action="Login" asp-controller="Account" class="align-self-sm-center align-content-sm-center align-items-sm-center justify-content-sm-center">Already have an account?</a>
     </form>
 </section>

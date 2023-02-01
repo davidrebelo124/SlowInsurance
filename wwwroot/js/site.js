@@ -25,6 +25,7 @@
     const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
     const confirmpassword = document.querySelector('#confirmpassword');
     if (toggleConfirmPassword != null) {
+
         toggleConfirmPassword.addEventListener('click', function (e) {
             // toggle the type attribute
             const type = confirmpassword.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -32,6 +33,15 @@
             // toggle the eye slash icon
             this.classList.toggle('fa-eye-slash');
         });
+
+        confirmpassword.addEventListener('input', function (e) {
+            const isValid = password.value === confirmpassword.value;
+            confirmpassword.classList.toggle("is-valid", isValid);
+            password.classList.toggle("is-valid", isValid);
+            confirmpassword.classList.toggle("is-invalid", !isValid);
+            password.classList.toggle("is-invalid", !isValid);
+        });
+
     }
 
     //Toggle current password
@@ -46,6 +56,7 @@
             this.classList.toggle('fa-eye-slash');
         });
     }
+
 
     // enable Tooltips
     document.querySelectorAll('[data-bs-toggle="tooltip"]')

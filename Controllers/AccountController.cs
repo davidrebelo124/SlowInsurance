@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PhoneNumbers;
+using Portugal.Nif.Validator;
 using SlowInsurance.Entity;
 using SlowInsurance.Models.Account;
 using SlowInsurance.Models.Invoice;
@@ -22,9 +23,18 @@ namespace SlowInsurance.Controllers
         private readonly InsuranceDbContext context;
         private readonly IEmailSender emailSender;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly INifValidator nifValidator;
         private readonly PhoneNumberUtil pUtil;
 
-        public AccountController(IOptions<JsonOptions> options, UserManager<ClientEntity> userManager, SignInManager<ClientEntity> signInManager, InsuranceDbContext context, IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
+        public AccountController(
+                        IOptions<JsonOptions> options,
+                        UserManager<ClientEntity> userManager,
+                        SignInManager<ClientEntity> signInManager,
+                        InsuranceDbContext context,
+                        IEmailSender emailSender,
+                        RoleManager<IdentityRole> roleManager,
+                        INifValidator nifValidator
+            )
         {
             this.options = options;
             this.userManager = userManager;
@@ -32,6 +42,7 @@ namespace SlowInsurance.Controllers
             this.context = context;
             this.emailSender = emailSender;
             this.roleManager = roleManager;
+            this.nifValidator = nifValidator;
             pUtil = PhoneNumberUtil.GetInstance();
         }
 
@@ -67,7 +78,7 @@ namespace SlowInsurance.Controllers
             {
                 Email = userData!.Email,
                 ConfirmPassword = userData.ConfirmPassword,
-                Password = userData.Password,
+                Password = userData.Password!,
                 Name = userData.Name,
             };
 
@@ -77,20 +88,30 @@ namespace SlowInsurance.Controllers
         [HttpPost]
         public async Task<IActionResult> CompleteSignUp(CompleteRegisterModel model)
         {
+            model.Password = model.ConfirmPassword;
+            ModelState.Clear();
+            TryValidateModel(model);
+            
             if (!ModelState.IsValid)
                 return View(model);
+            
             if (signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
+            
             if (DateTime.Parse(model.Birthday!) > DateTime.Now.AddYears(-18) || DateTime.Parse(model.Birthday!) < DateTime.Now.AddYears(-118))
-            {
                 ModelState.AddModelError(nameof(model.Birthday), "Not a valid date");
+            
+            if (!pUtil.IsValidNumberForRegion(pUtil.Parse(model.PhoneNumber, "PT"), ""))
+                ModelState.AddModelError(nameof(model.PhoneNumber), "Not a valid phone number");
+            
+            if (!nifValidator.Validate(model.NIF))
+                ModelState.AddModelError(nameof(model.NIF), "Not a valid NIF");
+            
+            ModelState.Clear();
+            TryValidateModel(model);
+
+            if (!ModelState.IsValid)
                 return View(model);
-            }
-            if (!pUtil.IsValidNumber(pUtil.Parse(model.PhoneNumber, "PT")))
-            {
-                ModelState.AddModelError(nameof(model.PhoneNumber), "Not a valid number");
-                return View(model);
-            }
 
             var user = new ClientEntity
             {
@@ -188,9 +209,21 @@ namespace SlowInsurance.Controllers
         [Authorize]
         public async Task<IActionResult> AccountDetails(AccountDetailsModel model)
         {
-            if (DateTime.Parse(model.Birthday) > DateTime.Now.AddYears(-18) && DateTime.Parse(model.Birthday) < DateTime.Now.AddYears(-118))
+            if (!ModelState.IsValid)
+                return View(model);
+            if (DateTime.Parse(model.Birthday!) > DateTime.Now.AddYears(-18) || DateTime.Parse(model.Birthday!) < DateTime.Now.AddYears(-118))
             {
-                ModelState.AddModelError("", "Not a valid date");
+                ModelState.AddModelError(nameof(model.Birthday), "Not a valid date");
+                return View(model);
+            }
+            if (!pUtil.IsValidNumber(pUtil.Parse(model.PhoneNumber, "PT")))
+            {
+                ModelState.AddModelError(nameof(model.PhoneNumber), "Not a valid phone number");
+                return View(model);
+            }
+            if (!nifValidator.Validate(model.NIF))
+            {
+                ModelState.AddModelError(nameof(model.NIF), "Not a valid NIF");
                 return View(model);
             }
             if (ModelState.IsValid)
