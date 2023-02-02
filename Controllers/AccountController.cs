@@ -100,17 +100,14 @@ namespace SlowInsurance.Controllers
             
             if (DateTime.Parse(model.Birthday!) > DateTime.Now.AddYears(-18) || DateTime.Parse(model.Birthday!) < DateTime.Now.AddYears(-118))
                 ModelState.AddModelError(nameof(model.Birthday), "Not a valid date");
-            
-            if (!pUtil.IsValidNumberForRegion(pUtil.Parse(model.PhoneNumber, "PT"), ""))
+            // Validation not working
+            if (!pUtil.IsValidNumberForRegion(pUtil.Parse(model.PhoneNumber, "PT"), "351"))
                 ModelState.AddModelError(nameof(model.PhoneNumber), "Not a valid phone number");
             
             if (!nifValidator.Validate(model.NIF))
                 ModelState.AddModelError(nameof(model.NIF), "Not a valid NIF");
-            
-            ModelState.Clear();
-            TryValidateModel(model);
 
-            if (!ModelState.IsValid)
+            if (ModelState.ErrorCount > 0)
                 return View(model);
 
             var user = new ClientEntity
@@ -361,17 +358,15 @@ namespace SlowInsurance.Controllers
         public IActionResult ChangePassword(ChangePasswordModel model)
         {
             if (!ModelState.IsValid)
-                return RedirectToAction("AccountDetails");
+                return PartialView("_ChangePassword", model);
 
             var user = context.Users.First(u => u.UserName == User.Identity.Name);
             var result = userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password).Result;
 
             if (!result.Succeeded)
-            {
-                return RedirectToAction("AccountDetails");
-            }
+                return PartialView(model);
 
-            return RedirectToAction("AccountDetails");
+            return PartialView(model);
         }
 
         [HttpGet]

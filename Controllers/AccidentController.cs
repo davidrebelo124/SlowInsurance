@@ -5,6 +5,7 @@ using SlowInsurance.Entity;
 using SlowInsurance.Models.Accident;
 using SlowInsurance.Models.Vehicle;
 using SlowInsurance.Repo;
+using System.Globalization;
 
 namespace SlowInsurance.Controllers
 {
@@ -35,11 +36,11 @@ namespace SlowInsurance.Controllers
                 Vehicles = a.Vehicles.Select(v => new VehicleModel
                 {
                     Id = v.Id,
-                    VehicleType = Enum.Parse<VehicleType>(v.VehicleType),
+                    VehicleType = Enum.Parse<VehicleType>(v.VehicleType!),
                     Model = v.Model,
-                    RegistrationDate = DateTime.ParseExact(v.RegistrationDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
+                    RegistrationDate = DateTime.TryParseExact(v.RegistrationDate, "dd/MM/yyyy", CultureInfo.DefaultThreadCurrentCulture, DateTimeStyles.None, out DateTime registrationDate) ? registrationDate : default,
                     Plate = v.Plate,
-                    AdhesionDate = DateTime.ParseExact(v.AdhesionDate, "dd/MM/yyyy", System.Globalization.CultureInfo.DefaultThreadCurrentCulture),
+                    AdhesionDate = DateTime.TryParseExact(v.AdhesionDate, "dd/MM/yyyy", CultureInfo.DefaultThreadCurrentCulture, DateTimeStyles.None, out DateTime adhesionDate) ? adhesionDate : default,
                 }).ToList(),
             }).ToList();
 

@@ -9,6 +9,8 @@ Mockup Insurance website project for school
 - [x] Add "See Vehicles" in Admin List Users
 - [x] Let Accidents have all valid plates, even if not in db 
 - [x] Add Search Queries in needed Lists
+- [ ] Smaller ui sign up / login
+- [ ] Add validation to Change password
 - [ ] Separate Sign Up to 2 pages (NIF Validation)
 - [ ] Divide between controller and db querries
 - [ ] Ask for Assistance systemn
