@@ -101,8 +101,8 @@ namespace SlowInsurance.Controllers
             if (DateTime.Parse(model.Birthday!) > DateTime.Now.AddYears(-18) || DateTime.Parse(model.Birthday!) < DateTime.Now.AddYears(-118))
                 ModelState.AddModelError(nameof(model.Birthday), "Not a valid date");
             // Validation not working
-            if (!pUtil.IsValidNumberForRegion(pUtil.Parse(model.PhoneNumber, "PT"), "351"))
-                ModelState.AddModelError(nameof(model.PhoneNumber), "Not a valid phone number");
+            //if (!pUtil.IsValidNumberForRegion(pUtil.Parse(model.PhoneNumber, "PT"), "351"))
+            //    ModelState.AddModelError(nameof(model.PhoneNumber), "Not a valid phone number");
             
             if (!nifValidator.Validate(model.NIF))
                 ModelState.AddModelError(nameof(model.NIF), "Not a valid NIF");

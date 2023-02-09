@@ -118,6 +118,10 @@ namespace SlowInsurance.Controllers
             {
                 return BadRequest();
             }
+            if (vModel.VehicleType == VehicleType.Unknwon)
+            {
+                return BadRequest();
+            }
             var vehicle = new VehicleEntity
             {
                 Model = vModel.Model,

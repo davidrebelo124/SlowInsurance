@@ -8,7 +8,7 @@
         <h1 class="h3 mb-3 fw-normal">Add vehicle</h1>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-md-6 form-floating">
-            <select class="form-select" asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleType>()">
+            <select class="form-select" asp-for="VehicleType" asp-items="Html.GetEnumSelectList<VehicleType>().Take(Html.GetEnumSelectList<VehicleType>().Count() - 1)">
                 <option value="" selected>Choose a type</option>
             </select>
             <label asp-for="VehicleType"></label>

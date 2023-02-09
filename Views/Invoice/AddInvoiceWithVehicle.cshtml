@@ -29,7 +29,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-md-6 form-floating">
             <select class="form-select" asp-for="PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()">
-                <option value="" selected>Choose a type</option>
+                <option value="null" selected>Choose a type</option>
             </select>
             <label asp-for="PaymentType"></label>
             <span asp-validation-for="PaymentType" class="text-danger"></span>

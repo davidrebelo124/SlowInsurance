@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SlowInsurance.Entity;
@@ -58,7 +59,13 @@ namespace SlowInsurance.Controllers
 
             if (modell.RegistrationDate > DateTime.Now || modell.RegistrationDate < DateTime.Now.AddYears(-100))
             {
-                ModelState.AddModelError("", "Not a valid date");
+                ModelState.AddModelError(nameof(modell.RegistrationDate), "Not a valid date");
+                return View(modell);
+            }
+
+            if (modell.VehicleType == VehicleType.Unknwon)
+            {
+                ModelState.AddModelError(nameof(modell.VehicleType), "Not a valid Vehicle Type");
                 return View(modell);
             }
 
