@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -137,7 +137,7 @@ namespace SlowInsurance.Controllers
                 return View(model);
             }
             user.Vehicles.Add(vehicle);
-            user.Vehicles.Where(v => v.Plate == vehicle.Plate).First().Invoices.Add(invoice);
+            user.Vehicles.First(v => v.Plate == vehicle.Plate).Invoices.Add(invoice);
             context.SaveChanges();
 
             return RedirectToAction("ListVehicles", "Vehicle");
@@ -185,13 +185,7 @@ namespace SlowInsurance.Controllers
                 PaymentType = modell.PaymentType.ToString(),
             };
 
-            context.Users.Where(u => u.UserName == User.Identity.Name)
-                .Include(u => u.Vehicles)
-                .ThenInclude(v => v.Invoices)
-                .First()
-                .Vehicles
-                .Where(v => v.Plate == modell.Plate)
-                .First()
+            context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).ThenInclude(v => v.Invoices).First().Vehicles.First(v => v.Plate == modell.Plate)
                 .Invoices
                 .Add(renewal);
             invoice.ExpirationDate = null;
