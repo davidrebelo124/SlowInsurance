@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -109,7 +109,7 @@ namespace SlowInsurance.Controllers
         {
 
             var clientEntity = context.Users.Where(u => u.UserName == User.Identity.Name).Include(u => u.Vehicles).ThenInclude(v => v.Invoices).First();
-            var v = clientEntity.Vehicles.Where(v => v.Plate == id).First();
+            var v = clientEntity.Vehicles.First(v => v.Plate == id);
             var fileModel = new FileModel
             {
                 User = new FileUserModel { Email = clientEntity.Email, Name = clientEntity.Name },

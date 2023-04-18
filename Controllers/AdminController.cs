@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -172,7 +172,7 @@ namespace SlowInsurance.Controllers
             foreach (var v in vPlates)
             {
                 if (context.Vehicle.Any(ve => ve.Plate == v))
-                    vehicles.Add(context.Vehicle.Where(ve => ve.Plate == v).First());
+                    vehicles.Add(context.Vehicle.First(ve => ve.Plate == v));
                 else if (Regex.IsMatch(v, @"^(([A-Z]{2}-\d{2}-(\d{2}|[A-Z]{2}))|(\d{2}-(\d{2}-[A-Z]{2}|[A-Z]{2}-\d{2})))$"))
                 {
                     vehicles.Add(new VehicleEntity
